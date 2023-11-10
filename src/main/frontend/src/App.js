@@ -4,22 +4,43 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 
 function App() {
-   const [hello, setHello] = useState('');
-   const [test, setTest] = useState("test");
-   const [text, setText] = useState('');
+    const baseUrl = "http://localhost:8080";
+   const [name, setName] = useState('');
+   const [email, setEmail] = useState('');
+   const [password, setPassword] = useState('');
 
-    useEffect(() => {
-        axios.get('/api/hello')
-        .then(response => setHello(response.data))
-        .catch(error => console.log(error))
-    }, []);
 
+    const formSubmit = async (e) => {
+            await axios
+            .post(baseUrl + "/members", {
+                name : name,
+                email : email,
+                password : password
+            })
+            .then((res) => {
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }
+
+    const onChangeHandlerName = (e) => {
+        setName(e.target.value)
+    }
+    const onChangeHandlerEmail = (e) => {
+        setEmail(e.target.value)
+    }
+    const onChangeHandlerPassword = (e) => {
+        setPassword(e.target.value)
+    }
+ 
     return (
         <div>
-            백엔드에서 가져온 데이터입니다 : {hello}
-            <p>{test}</p>
-            <form>
-                <input name="text" type="text" value={text}/>
+            <form onSubmit={formSubmit}>
+                <input name="name" type="text" value={name} onChange={onChangeHandlerName}/>
+                <input name="email" type="text" value={email} onChange={onChangeHandlerEmail}/>
+                <input name="password" type="text" value={password} onChange={onChangeHandlerPassword}/>
+                <button type='submit'>제출</button>
             </form>
         </div>
     );
