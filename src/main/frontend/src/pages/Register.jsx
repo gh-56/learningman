@@ -1,18 +1,19 @@
-import Header from '../components/Header';
-import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 
 function Register() {
-  const nav = useNavigate();
+  const [title, setTitle] = useState('');
 
-  const goLogin = () => {
-    nav('/');
-  };
-
-  const title = '회원가입 페이지';
+  useEffect(() => {
+    axios
+      .get('/api/hello')
+      .then((response) => setTitle(response.data))
+      .catch((error) => console.log(error));
+  }, []);
   return (
     <div>
-      <Header title={title} />
-      <button onClick={goLogin}>로그인으로 이동</button>
+      <h1>회원가입 페이지</h1>
+      <p>{title}</p>
     </div>
   );
 }
