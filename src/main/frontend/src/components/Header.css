@@ -1,0 +1,17 @@
+.Header {
+  padding: 10px;
+  padding-bottom: 15px;
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid gray;
+  justify-content: space-between;
+}
+
+.Header > div {
+  display: flex;
+}
+
+.Header > .header_title {
+  font-size: 18px;
+}
