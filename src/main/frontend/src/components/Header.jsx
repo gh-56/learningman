@@ -23,7 +23,7 @@ function Header({ title, dropdownTab, searchInput, right }) {
         <div className='collapse navbar-collapse' id='navbarSupportedContent'>
           <ul className='navbar-nav me-auto mb-2 mb-lg-0'>
             <li className='nav-item'>
-              <Link className='nav-link active' aria-current='page' to='/'>로그인</Link>
+              <Link className='nav-link active' aria-current='page' to='/login'>로그인</Link>
             </li>
             <li className='nav-item'>
               <Link className='nav-link active' aria-current='page' to='/register'>회원가입</Link>
