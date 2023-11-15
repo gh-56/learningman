@@ -1,20 +1,26 @@
 // src/main/frontend/src/App.js
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Header from './components/Header';
 
-import React, {useEffect, useState} from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
-import Header from './component/Header';
-import Login from './component/Login';
 
+import React, { useEffect, useState } from 'react';
 
 function App() {
-    const title = "타이틀";
- 
-    return (
-        <div>
-          <Header title={title} />
-          <Login />
-        </div>
-    );
+  return (
+    <div>
+      <Router>
+        <Header />
+        <Routes>
+          <Route path='/' element={<Login />} />
+          <Route path='/register' element={<Register />} />
+        </Routes>
+      </Router>
+    </div>
+  );
+
 }
 
 export default App;
