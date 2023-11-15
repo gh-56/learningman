@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import Card from '../components/Card';
 
 function Register() {
   const [title, setTitle] = useState('');
@@ -14,6 +15,7 @@ function Register() {
     <div>
       <h1>회원가입 페이지</h1>
       <p>{title}</p>
+      <Card />
     </div>
   );
 }

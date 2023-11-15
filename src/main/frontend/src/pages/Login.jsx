@@ -1,17 +1,9 @@
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 
 function Login() {
-  const nav = useNavigate();
-
-  const goRegister = () => {
-    nav('/Register');
-  };
-
-
   return (
     <div>
-
-      <button onClick={goRegister}>회원가입</button>
+      <h1>로그인 페이지</h1>
     </div>
   );
 }
