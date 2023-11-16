@@ -22,6 +22,8 @@ repositories {
 }
 
 dependencies {
+	// 스프링 프레임워크 보안 : 인증, 인가 일반적인 공격 방어
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 	// 스프링부트 유효성 검증
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 
