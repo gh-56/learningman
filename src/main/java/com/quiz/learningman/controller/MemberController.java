@@ -7,10 +7,12 @@ import com.quiz.learningman.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,6 +37,12 @@ public class MemberController {
         Member member = Member.createMember(memberDto);
         memberService.saveMember(member);
         return member;
+    }
+
+    @PostMapping("/members/login")
+    public UserDetails login(@RequestBody MemberDto memberDto){
+        UserDetails userDetails = memberService.loadUserByUsername(memberDto.getMemberEmail());
+        return userDetails;
     }
 
 

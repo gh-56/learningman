@@ -43,6 +43,7 @@ function Register() {
         setPasswordError(null);
       }
     } else {
+      e.preventDefault();
       await axios
         .post(baseUrl + "/members/register", {
           memberName: memberName,
@@ -55,6 +56,7 @@ function Register() {
         .catch((err) => {
           console.log(err);
         });
+        console.log("test after api")
         navigate('/login');
     }
   };
