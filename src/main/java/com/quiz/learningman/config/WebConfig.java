@@ -7,16 +7,18 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebConfig {
+
     // CORS 허용
     @Bean
     public WebMvcConfigurer corsConfig() {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS", "PATCH")
-                        .allowedOrigins("http://localhost:3000"); // 안에 해당 주소를 넣어도 됨
-            };
+                registry
+                        .addMapping("/**")   // 모든 경로
+                        .allowedMethods("*")           // 모든 method
+                        .allowedOrigins("http://localhost:3000");  // 접근 가능 출처(리액트)
+            }
         };
     }
 }
