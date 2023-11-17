@@ -21,7 +21,17 @@ public class MemberService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
 
+    private void validateDuplicateMember(Member member) {
+        Member findMember = memberRepository.findByMemberEmail(member.getMemberEmail());
+        // 가입을 위해 입력한 멤버가 존재한다면
+        if (findMember != null) {
+            // 예외 발생
+            throw new IllegalStateException("가입된 회원입니다.");
+        }
+    }
+
     public Member saveMember(Member member){
+        validateDuplicateMember(member);
         return memberRepository.save(member);
     }
 
