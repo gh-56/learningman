@@ -7,4 +7,5 @@ import com.quiz.learningman.entity.Member;
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {
 
+    Member findByMemberEmail(String email);
 }

@@ -6,11 +6,15 @@ import com.quiz.learningman.entity.Member;
 import com.quiz.learningman.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+//import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,15 +30,21 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping("/members/register")
-    public Object memberForm(@Valid @RequestBody MemberDto memberDto, BindingResult bindingResult){
+    public ResponseEntity memberForm(@Valid @RequestBody MemberDto memberDto, BindingResult bindingResult){
         // 회원가입시 형식에 맞지 않는 데이터가 들어왔을 때
         if (bindingResult.hasErrors()){
             String errorMessage = "잘못된 접근입니다";
-            return errorMessage;
+            return ResponseEntity.status(HttpStatus.OK).body(errorMessage);
         }
         Member member = Member.createMember(memberDto);
         memberService.saveMember(member);
-        return member;
+        return ResponseEntity.status(HttpStatus.OK).body(member);
+    }
+
+    @PostMapping("/members/login")
+    public UserDetails login(@RequestBody MemberDto memberDto){
+        UserDetails userDetails = memberService.loadUserByUsername(memberDto.getMemberEmail());
+        return userDetails;
     }
 
 
