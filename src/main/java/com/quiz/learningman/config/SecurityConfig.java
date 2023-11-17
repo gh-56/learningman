@@ -61,6 +61,7 @@ public class SecurityConfig {
         );
 
         http.cors(Customizer.withDefaults());
+        http.csrf(csrf -> csrf.disable()); // CSRF 끄기 (POST 요청에 csrf 필터가 있어서 컨트롤러에 도달하기 전에 403 응답이 온 것 같네요.)
         return http.build();
     }
 
