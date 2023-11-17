@@ -30,7 +30,8 @@ public class MemberService implements UserDetailsService {
         Member member = memberRepository.findByMemberEmail(memberEmail);
 
         if (member == null){
-            throw new UsernameNotFoundException(memberEmail);
+            return null;
+//            throw new UsernameNotFoundException(memberEmail);
         }
 
         return User.builder()
