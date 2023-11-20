@@ -1,7 +1,9 @@
 package com.quiz.learningman.service;
 
 import com.quiz.learningman.dto.MemberDto;
+import com.quiz.learningman.dto.MemberProfileImgDto;
 import com.quiz.learningman.entity.Member;
+import com.quiz.learningman.entity.MemberProfileImg;
 import com.quiz.learningman.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
@@ -10,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @Transactional
@@ -17,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemberService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
+    private final MemberImgService memberImgService;
 
     private void validateDuplicateMember(Member member) {
         Member findMember = memberRepository.findByMemberEmail(member.getMemberEmail());
@@ -34,8 +38,12 @@ public class MemberService implements UserDetailsService {
     }
 
     // 프로필 정보 및 이미지 불러오기
-
-
+//    public Long loadMember(MemberProfileImgDto memberProfileImgDto, MultipartFile memberImgFile){
+//        MemberProfileImg memberProfileImg =
+//                MemberProfileImg.createMemberProfileImg(memberProfileImgDto);
+//
+//        return null;
+//    }
     @Override
     public UserDetails loadUserByUsername(String memberEmail) throws UsernameNotFoundException {
         Member member = memberRepository.findByMemberEmail(memberEmail);

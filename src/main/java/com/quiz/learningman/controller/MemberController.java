@@ -2,7 +2,10 @@
 package com.quiz.learningman.controller;
 
 import com.quiz.learningman.dto.MemberDto;
+import com.quiz.learningman.dto.MemberProfileImgDto;
 import com.quiz.learningman.entity.Member;
+import com.quiz.learningman.entity.MemberProfileImg;
+import com.quiz.learningman.service.MemberImgService;
 import com.quiz.learningman.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -14,10 +17,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -28,9 +29,11 @@ import java.util.List;
 public class MemberController {
 
     private final MemberService memberService;
+    private final MemberImgService memberImgService;
 
     @PostMapping("/members/register")
-    public ResponseEntity memberForm(@Valid @RequestBody MemberDto memberDto, BindingResult bindingResult){
+    public ResponseEntity memberForm(@Valid @RequestBody MemberDto memberDto,
+                                     BindingResult bindingResult){
         // 회원가입시 형식에 맞지 않는 데이터가 들어왔을 때
         if (bindingResult.hasErrors()){
             String errorMessage = "잘못된 접근입니다";
@@ -70,6 +73,31 @@ public class MemberController {
     public UserDetails login(@RequestBody MemberDto memberDto){
         UserDetails userDetails = memberService.loadUserByUsername(memberDto.getMemberEmail());
         return userDetails;
+    }
+
+    @PostMapping("/members/profile")
+    public ResponseEntity<String> profile(MemberProfileImg memberProfileImg, @RequestParam("file") MultipartFile file){
+//        if (bindingResult.hasErrors()){
+//            String errorMessage = "잘못된 접근입니다";
+//            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorMessage);
+//        }
+//        MemberProfileImg memberProfileImg = MemberProfileImg.createMemberProfileImg(memberProfileImgDto);
+//        try {
+//            memberImgService.saveMemberImg(memberProfileImg, memberImgFile);
+//        } catch (Exception e) {
+//            System.out.println("try문");
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+//        }
+//        return ResponseEntity.status(HttpStatus.OK).body(memberProfileImg);
+        try {
+            // You can perform further processing with the uploaded file here
+            // For demonstration purposes, this example simply returns the file name
+            memberImgService.saveMemberImg(memberProfileImg, file);
+//            String fileName = file.getOriginalFilename();
+            return ResponseEntity.ok("File uploaded successfully. File name: " + memberProfileImg.getMemberImgId());
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error uploading file: " + e.getMessage());
+        }
     }
 
 
