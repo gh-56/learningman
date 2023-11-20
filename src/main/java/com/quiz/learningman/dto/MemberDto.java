@@ -11,6 +11,7 @@ import lombok.*;
 
 @Getter @Setter @ToString @Builder
 public class MemberDto {
+    Long id;
 
     @NotBlank(message = "필수 입력값입니다")
     String memberName;

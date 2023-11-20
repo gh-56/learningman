@@ -64,6 +64,8 @@ public class MemberController {
 //        return "member";
 //    }
 
+
+    // UserDetails : 사용자의 정보를 담는 인터페이스
     @PostMapping("/members/login")
     public UserDetails login(@RequestBody MemberDto memberDto){
         UserDetails userDetails = memberService.loadUserByUsername(memberDto.getMemberEmail());
