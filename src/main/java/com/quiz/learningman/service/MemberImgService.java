@@ -18,18 +18,18 @@ public class MemberImgService {
     private final MemberImgRepository memberImgRepository;
     private final FileService fileService;
 
-    public Long saveMemberImg(MemberProfileImg memberProfileImg, MultipartFile memberImgFile) throws Exception{
+    public String saveMemberImg(MemberProfileImg memberProfileImg, MultipartFile memberImgFile) throws Exception{
         String oriImgName = memberImgFile.getOriginalFilename();
         String imgName = "";
         String imgUrl = "";
 
         if(!StringUtils.isEmpty(oriImgName)){
             imgName = fileService.uploadFile(memberImgLocation, oriImgName, memberImgFile.getBytes());
-            imgUrl = "/image/member" + imgName;
+            imgUrl = "/images/member/" + imgName;
         }
         memberProfileImg.updateMemberImg(oriImgName, imgName, imgUrl);
         memberImgRepository.save(memberProfileImg);
-        return memberProfileImg.getMemberImgId();
+        return memberProfileImg.getImgUrl();
     }
 
 }

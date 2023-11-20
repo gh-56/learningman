@@ -94,7 +94,7 @@ public class MemberController {
             // For demonstration purposes, this example simply returns the file name
             memberImgService.saveMemberImg(memberProfileImg, file);
 //            String fileName = file.getOriginalFilename();
-            return ResponseEntity.ok("File uploaded successfully. File name: " + memberProfileImg.getMemberImgId());
+            return ResponseEntity.status(HttpStatus.OK).body(memberProfileImg.getImgUrl());
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Error uploading file: " + e.getMessage());
         }
