@@ -18,4 +18,10 @@ public class MemberProfileImg {
     // 이미지 조회 URL
     @Column
     private String imgUrl;
+
+    public void updateMemberImg(String oriImgName, String imgName, String imgUrl ){
+        this.oriImgName = oriImgName;
+        this.imgName = imgName;
+        this.imgUrl = imgUrl;
+    }
 }
