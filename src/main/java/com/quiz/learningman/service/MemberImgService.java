@@ -18,7 +18,7 @@ public class MemberImgService {
     private final MemberImgRepository memberImgRepository;
     private final FileService fileService;
 
-    public void saveMemberImg(MemberProfileImg memberProfileImg, MultipartFile memberImgFile) throws Exception{
+    public Long saveMemberImg(MemberProfileImg memberProfileImg, MultipartFile memberImgFile) throws Exception{
         String oriImgName = memberImgFile.getOriginalFilename();
         String imgName = "";
         String imgUrl = "";
@@ -29,6 +29,7 @@ public class MemberImgService {
         }
         memberProfileImg.updateMemberImg(oriImgName, imgName, imgUrl);
         memberImgRepository.save(memberProfileImg);
+        return memberProfileImg.getMemberImgId();
     }
 
 }
