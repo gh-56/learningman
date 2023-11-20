@@ -35,4 +35,9 @@ out/
 
 ### VS Code ###
 .vscode/
-.gitmodules
+
+### 깃 서브모듈
+/.gitmodules
+
+### application.properties
+src/main/resources/application.properties
