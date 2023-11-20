@@ -26,6 +26,12 @@ public class SecurityConfig {
                         // 프리플라이트 요청에 대한 허용
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers(antMatcher("/")).permitAll()
+                        .requestMatchers(antMatcher("/resources/**")).permitAll()
+                        .requestMatchers(antMatcher("/css/**")).permitAll()
+                        .requestMatchers(antMatcher("/dist/**")).permitAll()
+                        .requestMatchers(antMatcher("/font-awesome/**")).permitAll()
+                        .requestMatchers(antMatcher("/fonts/**")).permitAll()
+                        .requestMatchers(antMatcher("/images/**")).permitAll()
                         .requestMatchers(antMatcher("/members/**")).permitAll()
                         .requestMatchers(antMatcher("/login/**")).permitAll()
                         .requestMatchers(antMatcher("/hello/**")).permitAll()
