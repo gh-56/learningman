@@ -1,9 +1,11 @@
 package com.quiz.learningman.config;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+@Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
     @Value("${uploadPath}") // application.properties에 등록된 값(업로드 경로) 읽어옴
     String uploadPath;
