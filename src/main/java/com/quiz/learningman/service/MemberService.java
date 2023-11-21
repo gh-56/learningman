@@ -37,13 +37,10 @@ public class MemberService implements UserDetailsService {
         return memberRepository.save(member);
     }
 
-    // 프로필 정보 및 이미지 불러오기
-//    public Long loadMember(MemberProfileImgDto memberProfileImgDto, MultipartFile memberImgFile){
-//        MemberProfileImg memberProfileImg =
-//                MemberProfileImg.createMemberProfileImg(memberProfileImgDto);
-//
-//        return null;
-//    }
+    // 프로필 정보 불러오기
+    public Member loadProfile(Member member){
+        return memberRepository.findByMemberEmail(member.getMemberEmail());
+    }
     @Override
     public UserDetails loadUserByUsername(String memberEmail) throws UsernameNotFoundException {
         Member member = memberRepository.findByMemberEmail(memberEmail);
