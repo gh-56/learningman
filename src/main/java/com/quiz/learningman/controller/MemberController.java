@@ -75,6 +75,10 @@ public class MemberController {
         return userDetails;
     }
 
+//    @GetMapping("/images/**")
+//    public ResponseEntity<String> image(){
+//        return ResponseEntity.status(HttpStatus.OK).body(null);
+//    }
     @PostMapping("/members/profile")
     public ResponseEntity<String> profile(MemberProfileImg memberProfileImg, @RequestParam("file") MultipartFile file){
 //        if (bindingResult.hasErrors()){
