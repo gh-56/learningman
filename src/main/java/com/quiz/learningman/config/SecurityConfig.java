@@ -32,7 +32,7 @@ public class SecurityConfig {
         .csrf(AbstractHttpConfigurer::disable) // CSRF 끄기 (POST 요청에 csrf 필터가 있어서 컨트롤러에 도달하기 전에 403 응답이 온 것으로 예상)
         .cors(Customizer.withDefaults());
         // OAuth 2.0 리소스 서버 사용 : JWT 요청 유효성 검사 기본 설정
-//        http.oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()));
+        http.oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()));
         http
                 .authorizeHttpRequests((authorizeHttpRequests) ->
                         authorizeHttpRequests
@@ -49,22 +49,22 @@ public class SecurityConfig {
     }
 
     // 인증 관리자 커스터마이징
-//    @Bean
-//    public AuthenticationManager authenticationManager(PasswordEncoder passwordEncoder, MemberService memberService){
-//
-//
-//        // 인증 공급자 구현체
-//        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-//        // 인증 공급자에 대한 비밀번호 암호화
-//        authenticationProvider.setPasswordEncoder(passwordEncoder());
-//        // 인증 공급자에서 사용하는 UserDetailService
-//        authenticationProvider.setUserDetailsService(memberService);
-//        return new ProviderManager();
-//    }
-//
-//    // 비밀번호 암호화
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
+    @Bean
+    public AuthenticationManager authenticationManager(PasswordEncoder passwordEncoder, MemberService memberService){
+
+
+        // 인증 공급자 구현체
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        // 인증 공급자에 대한 비밀번호 암호화
+        authenticationProvider.setPasswordEncoder(passwordEncoder());
+        // 인증 공급자에서 사용하는 UserDetailService
+        authenticationProvider.setUserDetailsService(memberService);
+        return new ProviderManager();
+    }
+
+    // 비밀번호 암호화
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 }
