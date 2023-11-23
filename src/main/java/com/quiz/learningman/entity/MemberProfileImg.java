@@ -1,7 +1,5 @@
 package com.quiz.learningman.entity;
 
-import com.quiz.learningman.constant.Role;
-import com.quiz.learningman.dto.MemberDto;
 import com.quiz.learningman.dto.MemberProfileImgDto;
 import jakarta.persistence.*;
 import lombok.Getter;

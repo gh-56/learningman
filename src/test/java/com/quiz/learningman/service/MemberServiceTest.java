@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,6 +20,8 @@ class MemberServiceTest {
     @Autowired
     MemberService memberService;
 
+    static PasswordEncoder passwordEncoder;
+
     // 멤버 테스트용 given 생성하는 메서드
     private static Member createMember() {
         MemberDto memberDto = MemberDto.builder()
@@ -26,7 +29,7 @@ class MemberServiceTest {
                 .memberName("김테스터")
                 .memberPassword("12345")
                 .build();
-        Member member = Member.createMember(memberDto);
+        Member member = Member.createMember(memberDto, passwordEncoder);
         return member;
     }
 
@@ -36,7 +39,7 @@ class MemberServiceTest {
                 .memberName("김테스터")
                 .memberPassword("12345")
                 .build();
-        Member member = Member.createMember(memberDto);
+        Member member = Member.createMember(memberDto, passwordEncoder);
         return member;
     }
     @Test
