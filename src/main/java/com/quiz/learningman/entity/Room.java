@@ -4,16 +4,22 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Getter @Setter
 public class Room {
 
     @Id
-    @Column(name = "room_id")
     @GeneratedValue
-    private Long id;
+    private Long roomId;
 
+    private String roomName;
 
-//    @JoinColumn(name = "member_id")
-//    private
+    @OneToOne
+    @JoinColumn(name = "teacher_id")
+    private Member teacher;
+
+    @OneToMany(mappedBy = "room")
+    private List<Member> students;
 }
