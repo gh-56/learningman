@@ -41,9 +41,17 @@ public class MemberService implements UserDetailsService {
         }
 
         return User.builder()
-                .username(member.getMemberName())
+                .username(member.getMemberEmail())
                 .password(member.getMemberPassword())
                 .roles(member.getRole().toString())
                 .build();
+    }
+
+    public Member memberInfo(String email){
+        Member member = memberRepository.findByMemberEmail(email);
+        if(member == null){
+            new RuntimeException("회원을 찾을 수 없습니다");
+        }
+        return member;
     }
 }

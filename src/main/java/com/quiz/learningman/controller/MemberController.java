@@ -17,6 +17,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.security.Principal;
+
 @RestController
 @RequiredArgsConstructor
 public class MemberController {
@@ -44,13 +46,13 @@ public class MemberController {
         return ResponseEntity.status(HttpStatus.OK).body(member);
 }
 
-    // UserDetails : 사용자의 정보를 담는 인터페이스
-    @PostMapping("/members/login")
-    public UserDetails login(@RequestBody MemberDto memberDto){
-        System.out.println(memberDto);
-        UserDetails userDetails = memberService.loadUserByUsername(memberDto.getMemberEmail());
-        return userDetails;
-    }
+//    // UserDetails : 사용자의 정보를 담는 인터페이스
+//    @PostMapping("/members/login")
+//    public UserDetails login(@RequestBody MemberDto memberDto){
+//        System.out.println(memberDto);
+//        UserDetails userDetails = memberService.loadUserByUsername(memberDto.getMemberEmail());
+//        return userDetails;
+//    }
 
     @PostMapping("/members/profile")
     public ResponseEntity<String> profile(MemberProfileImg memberProfileImg, @RequestParam("file") MultipartFile file){
@@ -61,4 +63,5 @@ public class MemberController {
             return ResponseEntity.status(500).body("Error uploading file: " + e.getMessage());
         }
     }
+
 }
