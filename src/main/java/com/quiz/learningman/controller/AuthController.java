@@ -28,6 +28,7 @@ public class AuthController {
 
     @PostMapping("/authenticate")
     public LoginResponseDto authenticate(@RequestBody LoginRequestDto loginRequestDto){
+        System.out.println(loginRequestDto);
 
         UserDetails userDetails = memberService.loadUserByUsername(loginRequestDto.getMemberEmail());
         if(userDetails == null){
@@ -38,13 +39,14 @@ public class AuthController {
 
         // 프론트에서 받은 인증 정보로 인증 토큰을 생성한다
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginRequestDto.getMemberEmail(), loginRequestDto.getMemberPassword());
+        System.out.println(authenticationToken);
 
          // 인증 토큰에서 인증 정보를 반환한다.
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
 
         // 인증 정보를 기반으로 토큰을 생성한다.
         String token = jwtService.createToken(authenticate);
-
+        log.info(token);
         // 인증 정보를 받아서 토큰을 반환한다
         return new LoginResponseDto(token);
     }

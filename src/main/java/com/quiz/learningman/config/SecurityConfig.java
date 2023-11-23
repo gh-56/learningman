@@ -41,7 +41,7 @@ public class SecurityConfig {
                                 .requestMatchers(antMatcher("/images/**")).permitAll()
                                 .requestMatchers(antMatcher("/members/**")).permitAll()
                                 .requestMatchers(antMatcher("/login/**")).permitAll()
-                                .requestMatchers(antMatcher("/authenticate/**")).permitAll()
+                                .requestMatchers(antMatcher("/authenticate")).permitAll()
                                 .anyRequest().authenticated()
                 );
 
@@ -51,21 +51,18 @@ public class SecurityConfig {
 
         return http.build();
     }
-    // 인증 관리자 커스터마이징
-    @Bean
-    public AuthenticationManager authenticationManager(PasswordEncoder passwordEncoder, MemberService memberService){
-        // 인증 공급자 구현체
-        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        // 인증 공급자에 비밀번호 암호화
-        authenticationProvider.setPasswordEncoder(passwordEncoder);
-        // 인증 공급자에서 사용하는 UserDetailService
-        authenticationProvider.setUserDetailsService(memberService);
-        return new ProviderManager(authenticationProvider);
-    }
 
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
+    }
+    // 인증 관리자 커스터마이징
+    @Bean
+    public AuthenticationManager authenticationManager(MemberService memberService, PasswordEncoder passwordEncoder){
+        var authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setPasswordEncoder(passwordEncoder);
+        authenticationProvider.setUserDetailsService(memberService);
+        return new ProviderManager(authenticationProvider);
     }
 
 }

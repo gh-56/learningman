@@ -61,6 +61,4 @@ public class MemberController {
             return ResponseEntity.status(500).body("Error uploading file: " + e.getMessage());
         }
     }
-
-
 }
