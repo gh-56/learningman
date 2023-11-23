@@ -24,6 +24,7 @@ import java.util.UUID;
 
 @Configuration
 public class JwtConfig {
+    @Bean
     public KeyPair keyPair(){
         // RSA 알고리즘으로 키 페어 생성
         try {
@@ -37,6 +38,7 @@ public class JwtConfig {
         // RSA Key 쌍 만들기 => OAuth2 리소스 서버 Nimbus 라이브러리 사용
         }
 
+    @Bean
     public RSAKey rsaKey(KeyPair keyPair) {
         return new RSAKey.Builder((RSAPublicKey) keyPair().getPublic()) // 공개키
                 .privateKey(keyPair().getPrivate())   // 비공개키
@@ -58,7 +60,8 @@ public class JwtConfig {
         return new NimbusJwtEncoder(jwkSource);
     }
 
-    // JWT 키 복호화 (검증) : Nimbus 라이브러리 사
+    // JWT 키 복호화 (검증) : Nimbus 라이브러리 사용
+    @Bean
     public JwtDecoder jwtDecoder(RSAKey rsaKey) throws JOSEException {
         return NimbusJwtDecoder.withPublicKey(rsaKey.toRSAPublicKey()).build();
     }

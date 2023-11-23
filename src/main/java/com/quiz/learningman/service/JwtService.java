@@ -33,7 +33,6 @@ public class JwtService {
                 .claim("scope", scope)    // 클레임 추가
                 .build();
         // ClaimSet을 기반으로 토큰을 암호화하고 문자열로 변환
-        String token = jwtEncoder.encode(JwtEncoderParameters.from(claimsSet)).getTokenValue();
-        return token;
+        return jwtEncoder.encode(JwtEncoderParameters.from(claimsSet)).getTokenValue();
     }
 }

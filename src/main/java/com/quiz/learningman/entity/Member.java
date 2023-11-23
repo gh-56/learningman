@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.security.crypto.password.PasswordEncoder;
 // import org.springframework.security.crypto.password.PasswordEncoder;
 
 
@@ -19,7 +20,6 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Member {
-
     // 멤버 아이디
     @Id
     @Column
@@ -40,14 +40,14 @@ public class Member {
     @Column(name = "role" ,length = 128)
     private Role role;
 
-    public  static Member createMember(MemberDto memberDto /*PasswordEncoder passwordEncoder*/){
+    public  static Member createMember(MemberDto memberDto, PasswordEncoder passwordEncoder){
         Member member = new Member();
 
         member.setMemberName(memberDto.getMemberName());
         member.setMemberEmail(memberDto.getMemberEmail());
-        // String encodedPassword = passwordEncoder.encode(memberDto.getMemberPassword());
-        // member.setMemberPassword(encodedPassword);
-        member.setMemberPassword(memberDto.getMemberPassword());
+        String encodedPassword = passwordEncoder.encode(memberDto.getMemberPassword());
+        member.setMemberPassword(encodedPassword);
+//        member.setMemberPassword(memberDto.getMemberPassword());
 
         member.setRole(Role.ADMIN);
 

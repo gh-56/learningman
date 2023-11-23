@@ -12,6 +12,7 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,7 +31,10 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http// auth 설정 추가
         .csrf(AbstractHttpConfigurer::disable) // CSRF 끄기 (POST 요청에 csrf 필터가 있어서 컨트롤러에 도달하기 전에 403 응답이 온 것으로 예상)
-        .cors(Customizer.withDefaults());
+        .cors(Customizer.withDefaults())
+        .sessionManagement((session) -> session
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        );
         // OAuth 2.0 리소스 서버 사용 : JWT 요청 유효성 검사 기본 설정
         http.oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()));
         http
@@ -38,9 +42,10 @@ public class SecurityConfig {
                         authorizeHttpRequests
                                 // 프리플라이트 요청에 대한 허용
                                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                                .requestMatchers(antMatcher("/**")).permitAll()
+                                .requestMatchers(antMatcher("/")).permitAll()
                                 .requestMatchers(antMatcher("/css/**")).permitAll()
                                 .requestMatchers(antMatcher("/images/**")).permitAll()
+                                .requestMatchers(antMatcher("/authenticate")).permitAll()
                                 .requestMatchers(antMatcher("/members/**")).permitAll()
                                 .requestMatchers(antMatcher("/login/**")).permitAll()
                                 .anyRequest().authenticated()
@@ -51,17 +56,15 @@ public class SecurityConfig {
     // 인증 관리자 커스터마이징
     @Bean
     public AuthenticationManager authenticationManager(PasswordEncoder passwordEncoder, MemberService memberService){
-
-
         // 인증 공급자 구현체
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         // 인증 공급자에 대한 비밀번호 암호화
-        authenticationProvider.setPasswordEncoder(passwordEncoder());
+        authenticationProvider.setPasswordEncoder(passwordEncoder);
         // 인증 공급자에서 사용하는 UserDetailService
         authenticationProvider.setUserDetailsService(memberService);
-        return new ProviderManager();
+        return new ProviderManager(authenticationProvider);
     }
-
+//
     // 비밀번호 암호화
     @Bean
     public PasswordEncoder passwordEncoder() {

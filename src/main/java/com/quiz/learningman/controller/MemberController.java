@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -21,6 +22,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -31,7 +33,7 @@ public class MemberController {
 
     private final MemberService memberService;
     private final MemberImgService memberImgService;
-    private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @PostMapping("/members/register")
     public ResponseEntity memberForm(@Valid @RequestBody MemberDto memberDto,
@@ -43,7 +45,7 @@ public class MemberController {
         }
         Member member = new Member();
         try{
-            member = Member.createMember(memberDto);
+            member = Member.createMember(memberDto, passwordEncoder);
             memberService.saveMember(member);
         } catch (IllegalStateException e) {
             System.out.println("중복 이메일 입니다!");
@@ -69,11 +71,11 @@ public class MemberController {
         }
     }
 
-    @GetMapping("/members/profile/{email}")
-    public ResponseEntity<Member> profileInfo(@PathVariable String email){
-        Member findMember = memberRepository.findByMemberEmail(email);
+    @GetMapping("/members/profile")
+    public ResponseEntity<Member> profileInfo(Principal principal){
+        String email = principal.getName();
+        Member findMember = memberService.loadProfile(email);
         return ResponseEntity.status(HttpStatus.OK).body(findMember);
     }
-
 
 }
