@@ -55,10 +55,11 @@ public class AuthController {
         // 인증 정보를 받아서 토큰을 반환한다
         return new LoginResponseDto(token);
     }
-    @GetMapping("members/info")
+    @GetMapping("/members/info")
     public ResponseEntity memberInfo(Principal principal){
         String email = principal.getName();
         Member member = memberService.memberInfo(email);
+        System.out.println(member);
         return ResponseEntity.status(HttpStatus.OK).body(member);
     }
 }
