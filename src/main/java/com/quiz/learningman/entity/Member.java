@@ -49,7 +49,6 @@ public class Member {
          String encodedPassword = passwordEncoder.encode(memberDto.getMemberPassword());
          member.setMemberPassword(encodedPassword);
         member.setRole(Role.ADMIN);
-//
         return member;
     }
 }
