@@ -20,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Setter
 @ToString
 public class Member {
+
     // 멤버 아이디
     @Id
     @Column
@@ -42,13 +43,12 @@ public class Member {
 
     public  static Member createMember(MemberDto memberDto, PasswordEncoder passwordEncoder){
         Member member = new Member();
-
         member.setMemberName(memberDto.getMemberName());
         member.setMemberEmail(memberDto.getMemberEmail());
-        String encodedPassword = passwordEncoder.encode(memberDto.getMemberPassword());
-        member.setMemberPassword(encodedPassword);
+         String encodedPassword = passwordEncoder.encode(memberDto.getMemberPassword());
+         member.setMemberPassword(encodedPassword);
         member.setRole(Role.ADMIN);
-
+//
         return member;
     }
 }

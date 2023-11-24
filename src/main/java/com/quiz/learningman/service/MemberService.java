@@ -1,9 +1,6 @@
 package com.quiz.learningman.service;
 
-import com.quiz.learningman.dto.MemberDto;
-import com.quiz.learningman.dto.MemberProfileImgDto;
 import com.quiz.learningman.entity.Member;
-import com.quiz.learningman.entity.MemberProfileImg;
 import com.quiz.learningman.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
@@ -12,7 +9,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @Transactional
@@ -37,21 +33,12 @@ public class MemberService implements UserDetailsService {
         return memberRepository.save(member);
     }
 
-    // 프로필 정보 불러오기
-    public Member loadProfile(String email){
-        Member findMember = memberRepository.findByMemberEmail(email);
-        if(findMember == null){
-            new RuntimeException("회원을 찾을 수 없습니다.");
-        }
-        return findMember;
-    }
     @Override
     public UserDetails loadUserByUsername(String memberEmail) throws UsernameNotFoundException {
         Member member = memberRepository.findByMemberEmail(memberEmail);
 
         if (member == null){
-//            return null;
-            throw new UsernameNotFoundException(memberEmail);
+            return null;
         }
 
         return User.builder()
@@ -60,4 +47,13 @@ public class MemberService implements UserDetailsService {
                 .roles(member.getRole().toString())
                 .build();
     }
+
+    public Member memberInfo(String email){
+        Member member = memberRepository.findByMemberEmail(email);
+        if(member == null){
+            new RuntimeException("회원을 찾을 수 없습니다");
+        }
+        return member;
+    }
+
 }
