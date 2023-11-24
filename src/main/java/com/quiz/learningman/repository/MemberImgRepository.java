@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface MemberImgRepository extends JpaRepository<MemberProfileImg, Long> {
-//    @Query("SELECT m from MemberProfileImg  m " +
-//            "WHERE m.memberImgId = '52'")
-//    MemberProfileImg findByMemberImgIdJpql(@Param("memberImgId") String memberImgId);
+    @Query("SELECT m FROM MemberProfileImg  m " +
+            "WHERE m.memberImgId = ?1")
+    MemberProfileImg findByMemberImgIdJpql(@Param("memberImgId") String memberImgId);
 }

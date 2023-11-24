@@ -4,9 +4,9 @@ import com.quiz.learningman.dto.LoginRequestDto;
 import com.quiz.learningman.dto.LoginResponseDto;
 import com.quiz.learningman.entity.Member;
 import com.quiz.learningman.service.JwtService;
+import com.quiz.learningman.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import com.quiz.learningman.service.MemberService;
 
 import java.security.Principal;
 
@@ -45,16 +44,19 @@ public class AuthController {
 
         // 프론트에서 받은 인증 정보로 인증 토큰을 생성한다
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginRequestDto.getMemberEmail(), loginRequestDto.getMemberPassword());
+        System.out.println(authenticationToken);
 
-         // 인증 토큰에서 인증 정보를 반환한다.
+        // 인증 토큰에서 인증 정보를 반환한다.
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
 
         // 인증 정보를 기반으로 토큰을 생성한다.
         String token = jwtService.createToken(authenticate);
+        log.info(token);
 
-        // 인증 정보를 받아서 토큰을 반환한다
+        // 인증정보를 받아서 토큰을 반환한다.
         return new LoginResponseDto(token);
     }
+
     @GetMapping("/members/info")
     public ResponseEntity memberInfo(Principal principal){
         String email = principal.getName();
