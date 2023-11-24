@@ -40,19 +40,22 @@ public class MemberService implements UserDetailsService {
     // 프로필 정보 불러오기
     public Member loadProfile(String email){
         Member findMember = memberRepository.findByMemberEmail(email);
-        return memberRepository.findByMemberEmail(findMember.getMemberEmail());
+        if(findMember == null){
+            new RuntimeException("회원을 찾을 수 없습니다.");
+        }
+        return findMember;
     }
     @Override
     public UserDetails loadUserByUsername(String memberEmail) throws UsernameNotFoundException {
         Member member = memberRepository.findByMemberEmail(memberEmail);
 
         if (member == null){
-            return null;
-//            throw new UsernameNotFoundException(memberEmail);
+//            return null;
+            throw new UsernameNotFoundException(memberEmail);
         }
 
         return User.builder()
-                .username(member.getMemberName())
+                .username(member.getMemberEmail())
                 .password(member.getMemberPassword())
                 .roles(member.getRole().toString())
                 .build();

@@ -64,12 +64,17 @@ public class MemberController {
     @PostMapping("/members/profile/img")
     public ResponseEntity<String> profileImg(MemberProfileImg memberProfileImg, @RequestParam("file") MultipartFile file){
         try {
-            memberImgService.saveMemberImg(memberProfileImg, file);
-            return ResponseEntity.status(HttpStatus.OK).body(memberProfileImg.getImgUrl());
+            String imgUrl = memberImgService.saveMemberImg(memberProfileImg, file);
+            return ResponseEntity.status(HttpStatus.OK).body(imgUrl);
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Error uploading file: " + e.getMessage());
         }
     }
+//    @GetMapping("/members/profile/baseimg")
+//    public ResponseEntity<String> profileBaseImg(){
+//        String imgUrl = memberImgService.baseImg();
+//        return ResponseEntity.status(HttpStatus.OK).body(imgUrl);
+//    }
 
     @GetMapping("/members/profile")
     public ResponseEntity<Member> profileInfo(Principal principal){
