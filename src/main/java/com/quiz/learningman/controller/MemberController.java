@@ -2,8 +2,10 @@
 package com.quiz.learningman.controller;
 
 import com.quiz.learningman.dto.MemberDto;
+import com.quiz.learningman.dto.MemberProfileImgDto;
 import com.quiz.learningman.entity.Member;
 import com.quiz.learningman.entity.MemberProfileImg;
+import com.quiz.learningman.repository.MemberRepository;
 import com.quiz.learningman.service.MemberImgService;
 import com.quiz.learningman.service.MemberService;
 import jakarta.validation.Valid;
@@ -13,11 +15,17 @@ import org.springframework.http.ResponseEntity;
 //import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -46,22 +54,33 @@ public class MemberController {
         return ResponseEntity.status(HttpStatus.OK).body(member);
 }
 
-//    // UserDetails : 사용자의 정보를 담는 인터페이스
-//    @PostMapping("/members/login")
-//    public UserDetails login(@RequestBody MemberDto memberDto){
-//        System.out.println(memberDto);
-//        UserDetails userDetails = memberService.loadUserByUsername(memberDto.getMemberEmail());
-//        return userDetails;
-//    }
+    // UserDetails : 사용자의 정보를 담는 인터페이스
+    @PostMapping("/members/login")
+    public UserDetails login(@RequestBody MemberDto memberDto){
+        UserDetails userDetails = memberService.loadUserByUsername(memberDto.getMemberEmail());
+        return userDetails;
+    }
 
-    @PostMapping("/members/profile")
-    public ResponseEntity<String> profile(MemberProfileImg memberProfileImg, @RequestParam("file") MultipartFile file){
+    @PostMapping("/members/profile/img")
+    public ResponseEntity<String> profileImg(MemberProfileImg memberProfileImg, @RequestParam("file") MultipartFile file){
         try {
-            memberImgService.saveMemberImg(memberProfileImg, file);
-            return ResponseEntity.status(HttpStatus.OK).body(memberProfileImg.getImgUrl());
+            String imgUrl = memberImgService.saveMemberImg(memberProfileImg, file);
+            return ResponseEntity.status(HttpStatus.OK).body(imgUrl);
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Error uploading file: " + e.getMessage());
         }
+    }
+//    @GetMapping("/members/profile/baseimg")
+//    public ResponseEntity<String> profileBaseImg(){
+//        String imgUrl = memberImgService.baseImg();
+//        return ResponseEntity.status(HttpStatus.OK).body(imgUrl);
+//    }
+
+    @GetMapping("/members/profile")
+    public ResponseEntity<Member> profileInfo(Principal principal){
+        String email = principal.getName();
+        Member findMember = memberService.loadProfile(email);
+        return ResponseEntity.status(HttpStatus.OK).body(findMember);
     }
 
 }
