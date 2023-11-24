@@ -21,6 +21,10 @@ public class MemberProfileImg {
     @Column
     private String oriImgName;
 
+    @OneToOne
+    @JoinColumn(name = "member_email")
+    Member member;
+
     // 이미지 조회 URL
     @Column
     private String imgUrl;

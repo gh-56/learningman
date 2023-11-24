@@ -38,6 +38,10 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @ManyToOne
+    @JoinColumn(name = "room_id")
+    private Room room;
+
     public  static Member createMember(MemberDto memberDto /*PasswordEncoder passwordEncoder*/){
         Member member = new Member();
 
