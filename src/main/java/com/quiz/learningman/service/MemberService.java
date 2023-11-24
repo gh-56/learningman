@@ -37,13 +37,12 @@ public class MemberService implements UserDetailsService {
         return memberRepository.save(member);
     }
 
-    // 프로필 정보 불러오기
-    public Member loadProfile(String email){
-        Member findMember = memberRepository.findByMemberEmail(email);
-        if(findMember == null){
-            new RuntimeException("회원을 찾을 수 없습니다.");
+    public Member memberInfo(String email){
+        Member member = memberRepository.findByMemberEmail(email);
+        if(member == null){
+            new RuntimeException("회원을 찾을 수 없습니다");
         }
-        return findMember;
+        return member;
     }
     @Override
     public UserDetails loadUserByUsername(String memberEmail) throws UsernameNotFoundException {

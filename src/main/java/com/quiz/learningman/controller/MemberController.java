@@ -70,17 +70,17 @@ public class MemberController {
             return ResponseEntity.status(500).body("Error uploading file: " + e.getMessage());
         }
     }
-//    @GetMapping("/members/profile/baseimg")
-//    public ResponseEntity<String> profileBaseImg(){
-//        String imgUrl = memberImgService.baseImg();
-//        return ResponseEntity.status(HttpStatus.OK).body(imgUrl);
-//    }
-
-    @GetMapping("/members/profile")
-    public ResponseEntity<Member> profileInfo(Principal principal){
-        String email = principal.getName();
-        Member findMember = memberService.loadProfile(email);
-        return ResponseEntity.status(HttpStatus.OK).body(findMember);
+    @GetMapping("/members/profile/baseimg")
+    public ResponseEntity<String> profileBaseImg(){
+        try {
+            String imgUrl = memberImgService.baseImg();
+            System.out.println("imgUrl: " + imgUrl);
+            return ResponseEntity.status(HttpStatus.OK).body(imgUrl);
+        } catch (Exception e){
+            System.out.println("e" + e);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
+
 
 }

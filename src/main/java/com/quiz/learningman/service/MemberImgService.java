@@ -31,8 +31,8 @@ public class MemberImgService {
         memberImgRepository.save(memberProfileImg);
         return memberProfileImg.getImgUrl();
     }
-//    public String baseImg(){
-//        MemberProfileImg memberProfileImg = memberImgRepository.findByMemberImgIdJpql("52");
-//        return memberProfileImg.getImgUrl();
-//    }
+    public String baseImg(){
+        MemberProfileImg memberProfileImg = memberImgRepository.findByMemberImgIdJpql("1302");
+        return memberProfileImg.getImgUrl();
+    }
 }

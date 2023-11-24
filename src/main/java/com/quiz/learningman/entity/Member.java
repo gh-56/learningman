@@ -2,10 +2,7 @@ package com.quiz.learningman.entity;
 
 import com.quiz.learningman.constant.Role;
 import com.quiz.learningman.dto.MemberDto;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -39,6 +36,10 @@ public class Member {
     // 역할
     @Column(name = "role" ,length = 128)
     private Role role;
+
+    @OneToOne
+    @Column(name = "member_img_id")
+    MemberProfileImg memberProfileImg;
 
     public  static Member createMember(MemberDto memberDto, PasswordEncoder passwordEncoder){
         Member member = new Member();

@@ -2,17 +2,23 @@ package com.quiz.learningman.controller;
 
 import com.quiz.learningman.dto.LoginRequestDto;
 import com.quiz.learningman.dto.LoginResponseDto;
+import com.quiz.learningman.entity.Member;
 import com.quiz.learningman.service.JwtService;
 import com.quiz.learningman.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.security.Principal;
 
 @Slf4j
 @RestController
@@ -49,5 +55,13 @@ public class AuthController {
 
         // 인증정보를 받아서 토큰을 반환한다.
         return new LoginResponseDto(token);
+    }
+
+    @GetMapping("/members/info")
+    public ResponseEntity memberInfo(Principal principal){
+        String email = principal.getName();
+        Member member = memberService.memberInfo(email);
+        System.out.println(member);
+        return ResponseEntity.status(HttpStatus.OK).body(member);
     }
 }
