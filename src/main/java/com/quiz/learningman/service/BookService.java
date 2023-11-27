@@ -1,4 +1,4 @@
-package com.quiz.learningman.service;
+/*package com.quiz.learningman.service;
 
 import com.quiz.learningman.dto.ChapterDto;
 import com.quiz.learningman.repository.BookRepository;
@@ -14,7 +14,7 @@ public class BookService {
     private final BookRepository bookRepository;
     private final ChapterRepository chapterRepository;
 
-//    public Long chapters(List<ChapterDto> chapterDtoList, Long bookId) {
-//
-//    }
-}
+    public Long chapters(List<ChapterDto> chapterDtoList, Long bookId) {
+
+    }
+}*/

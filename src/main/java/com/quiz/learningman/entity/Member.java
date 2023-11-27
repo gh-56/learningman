@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.security.crypto.password.PasswordEncoder;
 // import org.springframework.security.crypto.password.PasswordEncoder;
 
 
@@ -42,14 +43,13 @@ public class Member {
     @JoinColumn(name = "room_id")
     private Room room;
 
-    public  static Member createMember(MemberDto memberDto /*PasswordEncoder passwordEncoder*/){
+    public  static Member createMember(MemberDto memberDto, PasswordEncoder passwordEncoder){
         Member member = new Member();
 
         member.setMemberName(memberDto.getMemberName());
         member.setMemberEmail(memberDto.getMemberEmail());
-        // String encodedPassword = passwordEncoder.encode(memberDto.getMemberPassword());
-        // member.setMemberPassword(encodedPassword);
-        member.setMemberPassword(memberDto.getMemberPassword());
+         String encodedPassword = passwordEncoder.encode(memberDto.getMemberPassword());
+         member.setMemberPassword(encodedPassword);
 
         member.setRole(Role.ADMIN);
 

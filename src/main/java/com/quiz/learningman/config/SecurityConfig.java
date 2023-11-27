@@ -46,7 +46,7 @@ public class SecurityConfig {
                                 .requestMatchers(antMatcher("/css/**")).permitAll()
                                 .requestMatchers(antMatcher("/images/**")).permitAll()
                                 .requestMatchers(antMatcher("/authenticate")).permitAll()
-                                .requestMatchers(antMatcher("/members/**")).permitAll()
+                                .requestMatchers(antMatcher("/members/**")) .permitAll()
                                 .requestMatchers(antMatcher("/login/**")).permitAll()
                                 .requestMatchers(antMatcher("/memberinfo")).permitAll()
                                 .anyRequest().authenticated()
