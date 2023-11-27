@@ -5,6 +5,7 @@ import com.quiz.learningman.dto.MemberDto;
 import com.quiz.learningman.dto.MemberProfileImgDto;
 import com.quiz.learningman.entity.Member;
 import com.quiz.learningman.entity.MemberProfileImg;
+import com.quiz.learningman.repository.MemberImgRepository;
 import com.quiz.learningman.repository.MemberRepository;
 import com.quiz.learningman.service.MemberImgService;
 import com.quiz.learningman.service.MemberService;
@@ -33,6 +34,7 @@ public class MemberController {
 
     private final MemberService memberService;
     private final MemberImgService memberImgService;
+    private final MemberImgRepository memberImgRepository;
 
     private final MemberRepository memberRepository;
 
@@ -70,9 +72,17 @@ public class MemberController {
                                              Principal principal){
         String email = principal.getName();
         Member byMemberEmail = memberRepository.findByMemberEmail(email);
+
+        // 이전 이미지
+        MemberProfileImg beforeImg = byMemberEmail.getMemberProfileImg();
+        Long memberImgId = beforeImg.getMemberImgId();
         try {
             String imgUrl = memberImgService.saveMemberImg(memberProfileImg, file);
             memberService.updateMemberProfile(byMemberEmail, memberProfileImg);
+            // 이전 이미지 삭제
+            if(memberImgId != 1L){
+                memberImgRepository.delete(beforeImg);
+            }
             return ResponseEntity.status(HttpStatus.OK).body(imgUrl);
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Error uploading file: " + e.getMessage());
