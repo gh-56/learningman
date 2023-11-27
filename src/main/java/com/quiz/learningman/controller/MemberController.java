@@ -65,17 +65,23 @@ public class MemberController {
     }
 
     @PostMapping("/members/profile/img")
-    public ResponseEntity<String> profileImg(MemberProfileImg memberProfileImg, @RequestParam("file") MultipartFile file){
+    public ResponseEntity<String> profileImg(MemberProfileImg memberProfileImg,
+                                             @RequestParam("file") MultipartFile file,
+                                             Principal principal){
+        String email = principal.getName();
+        Member byMemberEmail = memberRepository.findByMemberEmail(email);
         try {
             String imgUrl = memberImgService.saveMemberImg(memberProfileImg, file);
+            memberService.updateMemberProfile(byMemberEmail, memberProfileImg);
             return ResponseEntity.status(HttpStatus.OK).body(imgUrl);
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Error uploading file: " + e.getMessage());
         }
     }
+
     @GetMapping("/members/profile/baseimg")
     public ResponseEntity<String> profileBaseImg(Principal principal){
-        System.out.println("principal"+principal.getName()); // test@test.com
+        //System.out.println("principal"+principal.getName()); // test@test.com
         String email = principal.getName();
         Member byMemberEmail = memberRepository.findByMemberEmail(email);
         MemberProfileImg memberProfileImg = byMemberEmail.getMemberProfileImg();

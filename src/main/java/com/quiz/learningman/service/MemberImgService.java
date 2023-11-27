@@ -30,7 +30,7 @@ public class MemberImgService {
         }
         memberProfileImg.updateMemberImg(oriImgName, imgName, imgUrl);
         memberImgRepository.save(memberProfileImg);
-         memberProfileImg.getMemberImgId();
+//         memberProfileImg.getMemberImgId();
         return memberProfileImg.getImgUrl();
     }
     public String baseImg(Long id){

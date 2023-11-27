@@ -40,6 +40,11 @@ public class MemberService implements UserDetailsService {
         return memberRepository.save(member);
     }
 
+    public void updateMemberProfile(Member member, MemberProfileImg memberProfileImg){
+        member.setMemberProfileImg(memberProfileImg);
+        memberRepository.save(member);
+    }
+
     public Member memberInfo(String email){
         Member member = memberRepository.findByMemberEmail(email);
         if(member == null){
