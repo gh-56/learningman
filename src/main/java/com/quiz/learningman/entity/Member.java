@@ -38,9 +38,9 @@ public class Member {
     @Column(name = "role" ,length = 128)
     private Role role;
 
-    @OneToOne
-    @Column(name = "member_img_id")
-    MemberProfileImg memberProfileImg;
+//    @OneToOne
+//    @Column(name = "member_img_id")
+//    MemberProfileImg memberProfileImg;
 
     public  static Member createMember(MemberDto memberDto, PasswordEncoder passwordEncoder){
         Member member = new Member();
