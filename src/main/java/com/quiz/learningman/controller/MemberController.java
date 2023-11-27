@@ -33,6 +33,9 @@ public class MemberController {
 
     private final MemberService memberService;
     private final MemberImgService memberImgService;
+
+    private final MemberRepository memberRepository;
+
     private final PasswordEncoder passwordEncoder;
 
     @PostMapping("/members/register")
@@ -71,9 +74,14 @@ public class MemberController {
         }
     }
     @GetMapping("/members/profile/baseimg")
-    public ResponseEntity<String> profileBaseImg(){
+    public ResponseEntity<String> profileBaseImg(Principal principal){
+        System.out.println("principal"+principal.getName()); // test@test.com
+        String email = principal.getName();
+        Member byMemberEmail = memberRepository.findByMemberEmail(email);
+        MemberProfileImg memberProfileImg = byMemberEmail.getMemberProfileImg();
+        Long memberImgId = memberProfileImg.getMemberImgId();
         try {
-            String imgUrl = memberImgService.baseImg();
+            String imgUrl = memberImgService.baseImg(memberImgId);
             System.out.println("imgUrl: " + imgUrl);
             return ResponseEntity.status(HttpStatus.OK).body(imgUrl);
         } catch (Exception e){

@@ -2,6 +2,7 @@ package com.quiz.learningman.service;
 
 import com.quiz.learningman.entity.MemberProfileImg;
 import com.quiz.learningman.repository.MemberImgRepository;
+import com.quiz.learningman.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -29,10 +30,11 @@ public class MemberImgService {
         }
         memberProfileImg.updateMemberImg(oriImgName, imgName, imgUrl);
         memberImgRepository.save(memberProfileImg);
+         memberProfileImg.getMemberImgId();
         return memberProfileImg.getImgUrl();
     }
-    public String baseImg(){
-        MemberProfileImg memberProfileImg = memberImgRepository.findByMemberImgIdJpql(1L);
+    public String baseImg(Long id){
+        MemberProfileImg memberProfileImg = memberImgRepository.findByMemberImgIdJpql(id);
         return memberProfileImg.getImgUrl();
     }
 }
