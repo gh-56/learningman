@@ -32,7 +32,7 @@ public class MemberImgService {
         return memberProfileImg.getImgUrl();
     }
     public String baseImg(){
-        MemberProfileImg memberProfileImg = memberImgRepository.findByMemberImgIdJpql("1302");
+        MemberProfileImg memberProfileImg = memberImgRepository.findByMemberImgIdJpql(1L);
         return memberProfileImg.getImgUrl();
     }
 }

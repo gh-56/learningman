@@ -11,5 +11,5 @@ import java.util.List;
 public interface MemberImgRepository extends JpaRepository<MemberProfileImg, Long> {
     @Query("SELECT m FROM MemberProfileImg  m " +
             "WHERE m.memberImgId = ?1")
-    MemberProfileImg findByMemberImgIdJpql(@Param("memberImgId") String memberImgId);
+    MemberProfileImg findByMemberImgIdJpql(@Param("memberImgId") Long memberImgId);
 }

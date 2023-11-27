@@ -39,10 +39,10 @@ public class Member {
     private Role role;
 
     @OneToOne
-    @Column(name = "member_img_id")
+    @JoinColumn(name = "member_img_id")
     MemberProfileImg memberProfileImg;
 
-    public  static Member createMember(MemberDto memberDto, PasswordEncoder passwordEncoder){
+    public static Member createMember(MemberDto memberDto, PasswordEncoder passwordEncoder){
         Member member = new Member();
         member.setMemberName(memberDto.getMemberName());
         member.setMemberEmail(memberDto.getMemberEmail());
