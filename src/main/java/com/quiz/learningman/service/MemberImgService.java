@@ -26,7 +26,7 @@ public class MemberImgService {
 
         if(!StringUtils.isEmpty(oriImgName)){
             imgName = fileService.uploadFile(memberImgLocation, oriImgName, memberImgFile.getBytes());
-            imgUrl = "/images/img/" + imgName;
+            imgUrl = "/images/member/" + imgName;
         }
         memberProfileImg.updateMemberImg(oriImgName, imgName, imgUrl);
         memberImgRepository.save(memberProfileImg);
