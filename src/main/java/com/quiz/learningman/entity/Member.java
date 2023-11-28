@@ -2,13 +2,11 @@ package com.quiz.learningman.entity;
 
 import com.quiz.learningman.constant.Role;
 import com.quiz.learningman.dto.MemberDto;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.security.crypto.password.PasswordEncoder;
 // import org.springframework.security.crypto.password.PasswordEncoder;
 
 
@@ -40,17 +38,17 @@ public class Member {
     @Column(name = "role" ,length = 128)
     private Role role;
 
-    public  static Member createMember(MemberDto memberDto /*PasswordEncoder passwordEncoder*/){
-        Member member = new Member();
+    @OneToOne
+    @JoinColumn(name = "member_img_id")
+    MemberProfileImg memberProfileImg;
 
+    public static Member createMember(MemberDto memberDto, PasswordEncoder passwordEncoder){
+        Member member = new Member();
         member.setMemberName(memberDto.getMemberName());
         member.setMemberEmail(memberDto.getMemberEmail());
-        // String encodedPassword = passwordEncoder.encode(memberDto.getMemberPassword());
-        // member.setMemberPassword(encodedPassword);
-        member.setMemberPassword(memberDto.getMemberPassword());
-
+         String encodedPassword = passwordEncoder.encode(memberDto.getMemberPassword());
+         member.setMemberPassword(encodedPassword);
         member.setRole(Role.ADMIN);
-
         return member;
     }
 }

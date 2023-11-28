@@ -4,6 +4,7 @@ import com.quiz.learningman.dto.MemberDto;
 import com.quiz.learningman.dto.MemberProfileImgDto;
 import com.quiz.learningman.entity.Member;
 import com.quiz.learningman.entity.MemberProfileImg;
+import com.quiz.learningman.repository.MemberImgRepository;
 import com.quiz.learningman.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
@@ -21,6 +22,7 @@ public class MemberService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
     private final MemberImgService memberImgService;
+    private final MemberImgRepository memberImgRepository;
 
     private void validateDuplicateMember(Member member) {
         Member findMember = memberRepository.findByMemberEmail(member.getMemberEmail());
@@ -34,24 +36,33 @@ public class MemberService implements UserDetailsService {
     // 회원가입
     public Member saveMember(Member member){
         validateDuplicateMember(member);
+        member.setMemberProfileImg(memberImgRepository.findByMemberImgIdJpql(1L));
         return memberRepository.save(member);
     }
 
-    // 프로필 정보 불러오기
-    public Member loadProfile(Member member){
-        return memberRepository.findByMemberEmail(member.getMemberEmail());
+    public void updateMemberProfile(Member member, MemberProfileImg memberProfileImg){
+        member.setMemberProfileImg(memberProfileImg);
+        memberRepository.save(member);
+    }
+
+    public Member memberInfo(String email){
+        Member member = memberRepository.findByMemberEmail(email);
+        if(member == null){
+            new RuntimeException("회원을 찾을 수 없습니다");
+        }
+        return member;
     }
     @Override
     public UserDetails loadUserByUsername(String memberEmail) throws UsernameNotFoundException {
         Member member = memberRepository.findByMemberEmail(memberEmail);
 
         if (member == null){
-            return null;
-//            throw new UsernameNotFoundException(memberEmail);
+//            return null;
+            throw new UsernameNotFoundException(memberEmail);
         }
 
         return User.builder()
-                .username(member.getMemberName())
+                .username(member.getMemberEmail())
                 .password(member.getMemberPassword())
                 .roles(member.getRole().toString())
                 .build();

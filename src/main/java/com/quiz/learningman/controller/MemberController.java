@@ -5,6 +5,7 @@ import com.quiz.learningman.dto.MemberDto;
 import com.quiz.learningman.dto.MemberProfileImgDto;
 import com.quiz.learningman.entity.Member;
 import com.quiz.learningman.entity.MemberProfileImg;
+import com.quiz.learningman.repository.MemberImgRepository;
 import com.quiz.learningman.repository.MemberRepository;
 import com.quiz.learningman.service.MemberImgService;
 import com.quiz.learningman.service.MemberService;
@@ -14,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -21,6 +23,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -31,7 +34,11 @@ public class MemberController {
 
     private final MemberService memberService;
     private final MemberImgService memberImgService;
+    private final MemberImgRepository memberImgRepository;
+
     private final MemberRepository memberRepository;
+
+    private final PasswordEncoder passwordEncoder;
 
     @PostMapping("/members/register")
     public ResponseEntity memberForm(@Valid @RequestBody MemberDto memberDto,
@@ -43,7 +50,7 @@ public class MemberController {
         }
         Member member = new Member();
         try{
-            member = Member.createMember(memberDto);
+            member = Member.createMember(memberDto, passwordEncoder);
             memberService.saveMember(member);
         } catch (IllegalStateException e) {
             System.out.println("중복 이메일 입니다!");
@@ -60,19 +67,43 @@ public class MemberController {
     }
 
     @PostMapping("/members/profile/img")
-    public ResponseEntity<String> profileImg(MemberProfileImg memberProfileImg, @RequestParam("file") MultipartFile file){
+    public ResponseEntity<String> profileImg(MemberProfileImg memberProfileImg,
+                                             @RequestParam("file") MultipartFile file,
+                                             Principal principal){
+        String email = principal.getName();
+        Member byMemberEmail = memberRepository.findByMemberEmail(email);
+
+        // 이전 이미지
+        MemberProfileImg beforeImg = byMemberEmail.getMemberProfileImg();
+        Long memberImgId = beforeImg.getMemberImgId();
         try {
-            memberImgService.saveMemberImg(memberProfileImg, file);
-            return ResponseEntity.status(HttpStatus.OK).body(memberProfileImg.getImgUrl());
+            String imgUrl = memberImgService.saveMemberImg(memberProfileImg, file);
+            memberService.updateMemberProfile(byMemberEmail, memberProfileImg);
+            // 이전 이미지 삭제
+            if(memberImgId != 1L){
+                memberImgRepository.delete(beforeImg);
+            }
+            return ResponseEntity.status(HttpStatus.OK).body(imgUrl);
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Error uploading file: " + e.getMessage());
         }
     }
 
-    @GetMapping("/members/profile/{email}")
-    public ResponseEntity<Member> profileInfo(@PathVariable String email){
-        Member findMember = memberRepository.findByMemberEmail(email);
-        return ResponseEntity.status(HttpStatus.OK).body(findMember);
+    @GetMapping("/members/profile/baseimg")
+    public ResponseEntity<String> profileBaseImg(Principal principal){
+        //System.out.println("principal"+principal.getName()); // test@test.com
+        String email = principal.getName();
+        Member byMemberEmail = memberRepository.findByMemberEmail(email);
+        MemberProfileImg memberProfileImg = byMemberEmail.getMemberProfileImg();
+        Long memberImgId = memberProfileImg.getMemberImgId();
+        try {
+            String imgUrl = memberImgService.baseImg(memberImgId);
+            System.out.println("imgUrl: " + imgUrl);
+            return ResponseEntity.status(HttpStatus.OK).body(imgUrl);
+        } catch (Exception e){
+            System.out.println("e" + e);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
 
