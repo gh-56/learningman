@@ -74,15 +74,15 @@ public class MemberController {
         Member byMemberEmail = memberRepository.findByMemberEmail(email);
 
         // 이전 이미지
-        MemberProfileImg beforeImg = byMemberEmail.getMemberProfileImg();
-        Long memberImgId = beforeImg.getMemberImgId();
+//        MemberProfileImg beforeImg = byMemberEmail.getMemberProfileImg();
+//        Long memberImgId = beforeImg.getMemberImgId();
         try {
             String imgUrl = memberImgService.saveMemberImg(memberProfileImg, file);
             memberService.updateMemberProfile(byMemberEmail, memberProfileImg);
             // 이전 이미지 삭제
-            if(memberImgId != 1L){
-                memberImgRepository.delete(beforeImg);
-            }
+//            if(memberImgId != 1L){
+//                memberImgRepository.delete(beforeImg);
+//            }
             return ResponseEntity.status(HttpStatus.OK).body(imgUrl);
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Error uploading file: " + e.getMessage());
