@@ -1,3 +1,4 @@
+/*
 package com.quiz.learningman.entity;
 
 import jakarta.persistence.*;
@@ -22,3 +23,4 @@ public class Homework {
     @JoinColumn(name = "chapter_id")
     private Chapter chapter;
 }
+*/

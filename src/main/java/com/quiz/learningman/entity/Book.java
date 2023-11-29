@@ -1,9 +1,6 @@
 package com.quiz.learningman.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,9 +8,10 @@ import lombok.Setter;
 @Getter @Setter
 public class Book {
     @Id
-    @GeneratedValue
-    private Long bookId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long bId;
 
-    @Column(unique = true)
-    private String bookName;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "c_id")
+    private Chapter chapter;
 }

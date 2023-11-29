@@ -8,12 +8,12 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Chapter {
+    // 챕터 id
     @Id
-    @GeneratedValue
-    private Long chapterId;
-    @Column
-    private String chapterName;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long cId;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "book_id")
-    private Book book;
+    @JoinColumn(name = "quiz_id")
+    private Quiz quiz;
 }
