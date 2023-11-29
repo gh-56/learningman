@@ -16,12 +16,18 @@ import java.util.List;
 public class ArticleService {
     private final ArticleRepository articleRepository;
 
+    // 퀴즈 생성
     public Article create(ArticleForm dto) {
         Article article = Article.createArticle(dto);
         return articleRepository.save(article);
     }
 
+    // 퀴즈 목록
     public List<Article> index() {
         return articleRepository.findAll();
+    }
+
+    public Article show(Long id) {
+        return articleRepository.findById(id).orElse(null);
     }
 }
