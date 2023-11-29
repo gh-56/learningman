@@ -23,7 +23,5 @@ public class MemberDto {
     @NotBlank(message = "필수 입력값입니다")
     String memberPassword;
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
-
+    String role;
 }

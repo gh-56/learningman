@@ -48,7 +48,13 @@ public class Member {
         member.setMemberEmail(memberDto.getMemberEmail());
          String encodedPassword = passwordEncoder.encode(memberDto.getMemberPassword());
          member.setMemberPassword(encodedPassword);
-        member.setRole(Role.ADMIN);
+        if(memberDto.getRole().equals("STUDENT")){
+            member.setRole(Role.STUDENT);
+        } else if (memberDto.getRole().equals("TEACHER")) {
+            member.setRole(Role.TEACHER);
+        } else if (memberDto.getRole().equals("ADMIN")) {
+            member.setRole(Role.ADMIN);
+        }
         return member;
     }
 }

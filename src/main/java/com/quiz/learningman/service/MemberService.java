@@ -36,7 +36,6 @@ public class MemberService implements UserDetailsService {
     // 회원가입
     public Member saveMember(Member member){
         validateDuplicateMember(member);
-        member.setMemberProfileImg(memberImgRepository.findByMemberImgIdJpql(1L));
         return memberRepository.save(member);
     }
 
