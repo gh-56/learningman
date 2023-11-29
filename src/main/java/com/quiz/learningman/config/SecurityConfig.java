@@ -25,16 +25,16 @@ import static org.springframework.security.web.util.matcher.AntPathRequestMatche
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
-        // UserDetailService를 구현한 서비스 객체 등록
-        private final MemberService memberService;
+    // UserDetailService를 구현한 서비스 객체 등록
+    private final MemberService memberService;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http// auth 설정 추가
-        .csrf(AbstractHttpConfigurer::disable) // CSRF 끄기 (POST 요청에 csrf 필터가 있어서 컨트롤러에 도달하기 전에 403 응답이 온 것으로 예상)
-        .cors(Customizer.withDefaults())
-        .sessionManagement((session) -> session
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        );
+                .csrf(AbstractHttpConfigurer::disable) // CSRF 끄기 (POST 요청에 csrf 필터가 있어서 컨트롤러에 도달하기 전에 403 응답이 온 것으로 예상)
+                .cors(Customizer.withDefaults())
+                .sessionManagement((session) -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                );
         // OAuth 2.0 리소스 서버 사용 : JWT 요청 유효성 검사 기본 설정
         http.oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()));
         http
@@ -65,7 +65,7 @@ public class SecurityConfig {
         authenticationProvider.setUserDetailsService(memberService);
         return new ProviderManager(authenticationProvider);
     }
-//
+    //
     // 비밀번호 암호화
     @Bean
     public PasswordEncoder passwordEncoder() {

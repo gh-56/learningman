@@ -42,14 +42,14 @@ public class MemberController {
 
     @PostMapping("/members/register")
     public ResponseEntity memberForm(@Valid @RequestBody MemberDto memberDto,
-                                     BindingResult bindingResult){
+                                     BindingResult bindingResult) {
         // 회원가입시 형식에 맞지 않는 데이터가 들어왔을 때
-        if (bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             String errorMessage = "잘못된 접근입니다";
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
         }
         Member member = new Member();
-        try{
+        try {
             member = Member.createMember(memberDto, passwordEncoder);
             memberService.saveMember(member);
         } catch (IllegalStateException e) {
@@ -57,11 +57,11 @@ public class MemberController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
         return ResponseEntity.status(HttpStatus.OK).body(member);
-}
+    }
 
     // UserDetails : 사용자의 정보를 담는 인터페이스
     @PostMapping("/members/login")
-    public UserDetails login(@RequestBody MemberDto memberDto){
+    public UserDetails login(@RequestBody MemberDto memberDto) {
         UserDetails userDetails = memberService.loadUserByUsername(memberDto.getMemberEmail());
         return userDetails;
     }
@@ -69,7 +69,7 @@ public class MemberController {
     @PostMapping("/members/profile/img")
     public ResponseEntity<String> profileImg(MemberProfileImg memberProfileImg,
                                              @RequestParam("file") MultipartFile file,
-                                             Principal principal){
+                                             Principal principal) {
         String email = principal.getName();
         Member byMemberEmail = memberRepository.findByMemberEmail(email);
         MemberProfileImg beforeImg = new MemberProfileImg();
@@ -90,7 +90,7 @@ public class MemberController {
     }
 
     @GetMapping("/members/profile/baseimg")
-    public ResponseEntity<String> profileBaseImg(Principal principal){
+    public ResponseEntity<String> profileBaseImg(Principal principal) {
         //System.out.println("principal"+principal.getName()); // test@test.com
         String email = principal.getName();
         Member byMemberEmail = memberRepository.findByMemberEmail(email);
@@ -100,7 +100,7 @@ public class MemberController {
             String imgUrl = memberImgService.baseImg(memberImgId);
             System.out.println("imgUrl: " + imgUrl);
             return ResponseEntity.status(HttpStatus.OK).body(imgUrl);
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println("e" + e);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
