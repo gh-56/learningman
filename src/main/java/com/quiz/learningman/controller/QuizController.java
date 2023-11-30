@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 public class QuizController {
@@ -16,12 +18,12 @@ public class QuizController {
     private final QuizService quizService;
 
     @GetMapping(value = "/book")
-    public ResponseEntity<String> getBookList() {
-        return ResponseEntity.ok(quizService.getBooks().toString());
+    public ResponseEntity<List<String>> getBookList() {
+        return ResponseEntity.ok(quizService.getBooks());
     }
 
     @PostMapping(value = "/book/chapter")
-    public ResponseEntity<String> getChapterNames(@RequestParam("book") String book) {
-        return ResponseEntity.status(HttpStatus.OK).body(quizService.getChaptersByBook(book).toString());
+    public ResponseEntity<List<String>> getChapterNames(@RequestParam("book") String book) {
+        return ResponseEntity.status(HttpStatus.OK).body(quizService.getChaptersByBook(book));
     }
 }

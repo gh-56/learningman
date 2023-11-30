@@ -49,6 +49,10 @@ public class SecurityConfig {
                                 .requestMatchers(antMatcher("/members/**")).permitAll()
                                 .requestMatchers(antMatcher("/login/**")).permitAll()
                                 .requestMatchers(antMatcher("/memberinfo")).permitAll()
+
+                                .requestMatchers(antMatcher("/book")).permitAll()
+                                .requestMatchers(antMatcher("/book/chapter")).permitAll()
+
                                 .anyRequest().authenticated()
                 );
         return http.build();
