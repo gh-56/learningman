@@ -36,18 +36,21 @@ public class Member {
 
     // 역할
     @Column(name = "role" ,length = 128)
+    @Enumerated(EnumType.STRING)
     private Role role;
-
+  
     @OneToOne
     @JoinColumn(name = "member_img_id")
     MemberProfileImg memberProfileImg;
 
     public static Member createMember(MemberDto memberDto, PasswordEncoder passwordEncoder){
         Member member = new Member();
+
         member.setMemberName(memberDto.getMemberName());
         member.setMemberEmail(memberDto.getMemberEmail());
          String encodedPassword = passwordEncoder.encode(memberDto.getMemberPassword());
          member.setMemberPassword(encodedPassword);
+
         if(memberDto.getRole().equals("STUDENT")){
             member.setRole(Role.STUDENT);
         } else if (memberDto.getRole().equals("TEACHER")) {
