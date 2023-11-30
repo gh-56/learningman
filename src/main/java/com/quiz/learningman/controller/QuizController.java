@@ -4,10 +4,7 @@ import com.quiz.learningman.service.QuizService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,7 +20,7 @@ public class QuizController {
     }
 
     @PostMapping(value = "/book/chapter")
-    public ResponseEntity<List<String>> getChapterNames(@RequestParam("book") String book) {
+    public ResponseEntity<List<String>> getChapterNames(@RequestParam("selectedBook") String book) {
         return ResponseEntity.status(HttpStatus.OK).body(quizService.getChaptersByBook(book));
     }
 }
