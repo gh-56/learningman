@@ -34,7 +34,7 @@ public class CommentService {
     public List<CommentDto> comments(Long articleId) {
         return commentRepository.findByArticleId(articleId)
                 .stream()
-                .map(comment -> CommentDto.createCommentDto(comment))
+                .map(CommentDto::createCommentDto)
                 .collect(Collectors.toList());
     }
 }

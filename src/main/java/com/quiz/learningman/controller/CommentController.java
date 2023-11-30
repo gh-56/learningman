@@ -12,7 +12,6 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@Slf4j
 public class CommentController {
     private final CommentService commentService;
 
@@ -28,9 +27,16 @@ public class CommentController {
 
     // 댓글 조회
     @GetMapping("/api/articles/{articleId}/comments")
-    public ResponseEntity<List<CommentDto>> comments(@PathVariable Long articleId) {
+    public ResponseEntity comments(@PathVariable Long articleId) {
+        List<CommentDto> dtos = null;
+        try{
         // 서비스에 위임
-        List<CommentDto> dtos = commentService.comments(articleId);
+        dtos = commentService.comments(articleId);
+
+        } catch(Exception e){
+            System.out.println("게시물 번호와 매칭되는 댓글리스트 불러오기 실패");
+            return ResponseEntity.status(HttpStatus.OK).body(e.getMessage());
+        }
         // 결과 응답
         return ResponseEntity.status(HttpStatus.OK).body(dtos);
     }
