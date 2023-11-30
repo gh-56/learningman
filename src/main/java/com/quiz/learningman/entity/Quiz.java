@@ -18,9 +18,9 @@ public class Quiz {
     private String vdx;
 
     @Column @NotNull @Size(max=255)
-    private String bookId;
+    private String book;
     @Column @Size(max=255)
-    private String chapterId;
+    private String chapter;
 
     @Column @NotNull
     private String kor;
