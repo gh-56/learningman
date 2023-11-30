@@ -51,6 +51,8 @@ public class SecurityConfig {
                                 .requestMatchers(antMatcher("/memberinfo")).permitAll()
                                 .requestMatchers(antMatcher("/api/**")).permitAll()
                                 .requestMatchers(antMatcher("/articles/**")).permitAll()
+                                .requestMatchers(antMatcher("/book/**")).permitAll()
+                                .requestMatchers(antMatcher("/quizselect")).permitAll()
                                 .anyRequest().authenticated()
                 );
         return http.build();
