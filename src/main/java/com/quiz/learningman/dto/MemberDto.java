@@ -24,4 +24,5 @@ public class MemberDto {
     String memberPassword;
 
     String role;
+
 }

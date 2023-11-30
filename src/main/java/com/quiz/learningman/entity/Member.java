@@ -46,8 +46,8 @@ public class Member {
         Member member = new Member();
         member.setMemberName(memberDto.getMemberName());
         member.setMemberEmail(memberDto.getMemberEmail());
-         String encodedPassword = passwordEncoder.encode(memberDto.getMemberPassword());
-         member.setMemberPassword(encodedPassword);
+        String encodedPassword = passwordEncoder.encode(memberDto.getMemberPassword());
+        member.setMemberPassword(encodedPassword);
         if(memberDto.getRole().equals("STUDENT")){
             member.setRole(Role.STUDENT);
         } else if (memberDto.getRole().equals("TEACHER")) {
@@ -55,7 +55,9 @@ public class Member {
         } else if (memberDto.getRole().equals("ADMIN")) {
             member.setRole(Role.ADMIN);
         }
+
         return member;
+
     }
 }
 

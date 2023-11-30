@@ -38,7 +38,7 @@ public class JwtConfig {
     @Bean
     public RSAKey rsaKey(KeyPair keyPair){
         return new RSAKey.Builder((RSAPublicKey) keyPair.getPublic()) // 공개키
-                        .privateKey(keyPair().getPrivate())     // 비공개키
+                .privateKey(keyPair().getPrivate())     // 비공개키
                 .keyID(UUID.randomUUID().toString())
                 .build();
     }
