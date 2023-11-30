@@ -9,6 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class CommentService {
@@ -26,5 +29,12 @@ public class CommentService {
         Comment created = commentRepository.save(comment);
         // 4. DTO로 변환해 반환
         return CommentDto.createCommentDto(created);
+    }
+
+    public List<CommentDto> comments(Long articleId) {
+        return commentRepository.findByArticleId(articleId)
+                .stream()
+                .map(comment -> CommentDto.createCommentDto(comment))
+                .collect(Collectors.toList());
     }
 }
