@@ -59,6 +59,26 @@ public class MemberController {
         return ResponseEntity.status(HttpStatus.OK).body(member);
     }
 
+    @PostMapping("/members/update")
+    public ResponseEntity memberUpdate(@Valid @RequestBody MemberDto memberDto,
+                                     BindingResult bindingResult,
+                                       Principal principal) {
+        // 회원가입시 형식에 맞지 않는 데이터가 들어왔을 때
+        if (bindingResult.hasErrors()) {
+            String errorMessage = "잘못된 접근입니다";
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
+        }
+        String email = principal.getName();
+        Member updateMember = memberRepository.findByMemberEmail(email);
+        try {
+            memberService.updateMemberInfo(memberDto, passwordEncoder, updateMember);
+        } catch (IllegalStateException e) {
+            System.out.println("중복 이메일 입니다!");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(updateMember);
+    }
+
     // UserDetails : 사용자의 정보를 담는 인터페이스
     @PostMapping("/members/login")
     public UserDetails login(@RequestBody MemberDto memberDto) {
