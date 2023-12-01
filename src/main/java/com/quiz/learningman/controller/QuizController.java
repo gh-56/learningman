@@ -1,5 +1,6 @@
 package com.quiz.learningman.controller;
 
+import com.quiz.learningman.dto.BookDto;
 import com.quiz.learningman.service.QuizService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,8 +21,8 @@ public class QuizController {
     }
 
     @PostMapping(value = "/book/chapter")
-    public ResponseEntity getChapterNames(@RequestBody String book) {
-        List<String> chaptersByBook = quizService.getChaptersByBook(book);
+    public ResponseEntity getChapterNames(@RequestBody BookDto book) {
+        List<String> chaptersByBook = quizService.getChaptersByBook(book.getSelectedBook());
         System.out.println("chaptersByBook : " + chaptersByBook);
         System.out.println(chaptersByBook.size());
         try {
@@ -29,6 +30,5 @@ public class QuizController {
         } catch (Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
-
     }
 }
