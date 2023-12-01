@@ -20,7 +20,15 @@ public class QuizController {
     }
 
     @PostMapping(value = "/book/chapter")
-    public ResponseEntity<List<String>> getChapterNames(@RequestParam("selectedBook") String book) {
-        return ResponseEntity.status(HttpStatus.OK).body(quizService.getChaptersByBook(book));
+    public ResponseEntity getChapterNames(@RequestBody String book) {
+        List<String> chaptersByBook = quizService.getChaptersByBook(book);
+        System.out.println("chaptersByBook : " + chaptersByBook);
+        System.out.println(chaptersByBook.size());
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(chaptersByBook);
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+
     }
 }

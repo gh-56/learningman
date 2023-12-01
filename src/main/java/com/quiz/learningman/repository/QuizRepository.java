@@ -10,8 +10,10 @@ import java.util.List;
 public interface QuizRepository extends JpaRepository<Quiz, Long> {
     @Query(value = "SELECT DISTINCT q.book FROM quiz q", nativeQuery = true)
     List<String> findDistinctBooks();
-    @Query(value = "SELECT DISTINCT q.chapter_id FROM quiz q WHERE q.book = :selectedBook", nativeQuery = true)
-    List<String> findDistinctChaptersByBook(@Param("selectedBook") String book);
+//    @Query(value = "SELECT DISTINCT q.chapter FROM quiz q WHERE q.book = :selectedBook", nativeQuery = true)
+//    List<String> findDistinctChaptersByBook(@Param("selectedBook") String book);
+    @Query(value = "SELECT DISTINCT q.chapter FROM quiz q WHERE q.book = :selectedBook", nativeQuery = true)
+    List<String> findDistinctByBook(@Param("selectedBook") String book);
     @Query(value = "SELECT q.kor, q.eng FROM quiz q WHERE q.book = :selectedBook AND q.chapter = :selectedChapter", nativeQuery = true)
     List<Object[]> findKorAndEngByBookAndChapter(@Param("selectedBook") String book, @Param("selectedChapter") String chapter);
 }

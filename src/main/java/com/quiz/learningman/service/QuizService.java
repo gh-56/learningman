@@ -8,16 +8,19 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class QuizService {
     @Autowired
     private QuizRepository quizRepository;
+
     @Transactional(readOnly = true)
+
     public List<String> getBooks() {
         return quizRepository.findDistinctBooks();
     }
     @Transactional(readOnly = true)
     public List<String> getChaptersByBook(String book) {
-        return quizRepository.findDistinctChaptersByBook(book);
+        return quizRepository.findDistinctByBook(book);
     }
     @Transactional(readOnly = true)
     public List<Object[]> getQuizListByBookIdAndChapterId (String book, String chapter) {
