@@ -13,8 +13,10 @@ import java.util.Date;
 @NoArgsConstructor
 public class Homework {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
+    @GeneratedValue()
     private Long homeworkId;
+
     @Column
     private Date deadlineDate;
 
