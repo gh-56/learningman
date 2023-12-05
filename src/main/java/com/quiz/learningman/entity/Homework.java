@@ -22,6 +22,7 @@ public class Homework {
 
     @Column
     private String homeworkBook;
+
     @Column
     private String homeworkChapter;
 

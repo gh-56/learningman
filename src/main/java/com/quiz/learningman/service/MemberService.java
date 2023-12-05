@@ -64,6 +64,13 @@ public class MemberService implements UserDetailsService {
         return member;
     }
 
+    public void updateQuizScore(String email, String score){
+        Member byMemberEmail = memberRepository.findByMemberEmail(email);
+        byMemberEmail.setQuizScore(score);
+        byMemberEmail.setDone(true);
+        memberRepository.save(byMemberEmail);
+    }
+
     @Override
     public UserDetails loadUserByUsername(String memberEmail) throws UsernameNotFoundException {
         Member member = memberRepository.findByMemberEmail(memberEmail);

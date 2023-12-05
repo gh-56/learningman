@@ -38,9 +38,19 @@ public class Member {
     @Column(name = "role" ,length = 128)
     private Role role;
 
+    @Column
+    private String quizScore;
+
     @OneToOne
     @JoinColumn(name = "member_img_id")
     MemberProfileImg memberProfileImg;
+
+    @ManyToOne
+    @JoinColumn(name = "homework_id")
+    Homework homework;
+
+    @Column
+    private boolean isDone;
 
     public static Member createMember(MemberDto memberDto, PasswordEncoder passwordEncoder){
         Member member = new Member();
@@ -48,6 +58,7 @@ public class Member {
         member.setMemberEmail(memberDto.getMemberEmail());
         String encodedPassword = passwordEncoder.encode(memberDto.getMemberPassword());
         member.setMemberPassword(encodedPassword);
+        member.setDone(false);
         if(memberDto.getRole().equals("STUDENT")){
             member.setRole(Role.STUDENT);
         } else if (memberDto.getRole().equals("TEACHER")) {
@@ -55,9 +66,7 @@ public class Member {
         } else if (memberDto.getRole().equals("ADMIN")) {
             member.setRole(Role.ADMIN);
         }
-
         return member;
-
     }
 }
 
