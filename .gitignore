@@ -41,3 +41,7 @@ out/
 
 ### application.properties
 **/application.properties
+
+
+#### application_prod.properties
+#src/main/resources/application-prod.properties
