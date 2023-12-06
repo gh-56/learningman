@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.List;
 // import org.springframework.security.crypto.password.PasswordEncoder;
 
 
@@ -51,6 +53,9 @@ public class Member {
 
     @Column
     private boolean isDone;
+
+    @Column
+    private List<String> wrongIndexList;
 
     public static Member createMember(MemberDto memberDto, PasswordEncoder passwordEncoder){
         Member member = new Member();
