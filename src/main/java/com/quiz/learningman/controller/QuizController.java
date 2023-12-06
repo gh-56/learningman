@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -66,6 +67,21 @@ public class QuizController {
     public void quizEnd(Principal principal, @RequestBody ScoreDto score){
         String email = principal.getName();
         String getScore = score.getScore();
-        memberService.updateQuizScore(email, getScore);
+        List<String> wrongIndexList = score.getWrondIndexList();
+        memberService.updateQuizScore(email, getScore, wrongIndexList);
+    }
+
+    @GetMapping("/mywrongquiz")
+    public ResponseEntity<List<Object[]>> wrongQuizList(Principal principal){
+        String email = principal.getName();
+        Member member = memberRepository.findByMemberEmail(email);
+        List<String> wrongIndexList = member.getWrongIndexList();
+        Homework homework = member.getHomework();
+        List<Object[]> quizList = quizRepository.findKorAndEngByBookAndChapter(homework.getHomeworkBook(), homework.getHomeworkChapter());
+        List<Object[]> wrongQuiz = new ArrayList<>();
+        for (String s : wrongIndexList) {
+            wrongQuiz.add(quizList.get(Integer.parseInt(s)));
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(wrongQuiz);
     }
 }

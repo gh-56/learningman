@@ -1,7 +1,6 @@
 package com.quiz.learningman.service;
 
 import com.quiz.learningman.dto.MemberDto;
-import com.quiz.learningman.dto.MemberProfileImgDto;
 import com.quiz.learningman.entity.Member;
 import com.quiz.learningman.entity.MemberProfileImg;
 import com.quiz.learningman.repository.MemberImgRepository;
@@ -14,7 +13,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -64,10 +64,11 @@ public class MemberService implements UserDetailsService {
         return member;
     }
 
-    public void updateQuizScore(String email, String score){
+    public void updateQuizScore(String email, String score, List<String> wrongIndexList){
         Member byMemberEmail = memberRepository.findByMemberEmail(email);
         byMemberEmail.setQuizScore(score);
         byMemberEmail.setDone(true);
+        byMemberEmail.setWrongIndexList(wrongIndexList);
         memberRepository.save(byMemberEmail);
     }
 
