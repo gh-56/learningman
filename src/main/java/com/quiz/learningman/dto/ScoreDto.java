@@ -14,5 +14,5 @@ import java.util.List;
 public class ScoreDto {
     String score;
 
-    List<String> wrondIndexList;
+    List<String> wrongIndexList;
 }

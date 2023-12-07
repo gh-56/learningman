@@ -67,7 +67,7 @@ public class QuizController {
     public void quizEnd(Principal principal, @RequestBody ScoreDto score){
         String email = principal.getName();
         String getScore = score.getScore();
-        List<String> wrongIndexList = score.getWrondIndexList();
+        List<String> wrongIndexList = score.getWrongIndexList();
         memberService.updateQuizScore(email, getScore, wrongIndexList);
     }
 
