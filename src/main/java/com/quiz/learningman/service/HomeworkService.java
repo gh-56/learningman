@@ -24,6 +24,7 @@ public class HomeworkService {
         for (Member member : all) {
             member.setHomework(homework);
             member.setDone(false);
+            member.setWrongIndexList(null);
             member.setQuizScore(null);
             memberRepository.save(member);
         }
