@@ -40,7 +40,7 @@ out/
 /.gitmodules
 
 ### application.properties
-src/main/resources/application.properties
+src/main/resources/application-dev.properties
 
 
 ### application_prod.properties
