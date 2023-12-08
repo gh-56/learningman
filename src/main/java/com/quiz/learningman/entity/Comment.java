@@ -16,15 +16,18 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @ManyToOne
     @JoinColumn(name="article_id")
     private Article article;
-    @Column
-    private String nickname;
+
+    @ManyToOne
+    Member member;
+
     @Column
     private String body;
 
-    public static Comment createComment(CommentDto dto, Article article) {
+    public static Comment createComment(CommentDto dto, Article article, Member member) {
         // 예외 발생
         if (dto.getId() != null)
             throw new IllegalArgumentException("댓글 생성 실패! 댓글의 id가 없어야 합니다.");
@@ -34,7 +37,7 @@ public class Comment {
         return new Comment(
                 null, // 댓글 아이디
                 article, // 부모 게시글
-                dto.getNickname(), // 댓글 닉네임
+                member,
                 dto.getBody() // 댓글 본문
         );
     }

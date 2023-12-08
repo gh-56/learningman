@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -17,16 +18,18 @@ public class ArticleController {
     private final ArticleService articleService;
     // POST 퀴즈 등록
     @PostMapping("/api/articles")
-    public ResponseEntity create(@RequestBody ArticleForm dto){
+    public ResponseEntity create(@RequestBody ArticleForm dto, Principal principal){
         Article created = null;
+        String email = principal.getName();
         try {
-            created = articleService.create(dto);
+            created = articleService.create(dto,email);
         }catch(Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 
         }
         return ResponseEntity.status(HttpStatus.OK).body(created);
     }
+
     // 퀴즈 목록 리스트 불러오기
     @GetMapping("/api/articles")
     public ResponseEntity index(){
@@ -37,6 +40,18 @@ public class ArticleController {
     @GetMapping("/api/articles/{id}")
     public Article show(@PathVariable Long id){
         return articleService.show(id);
+    }
+
+    @PostMapping("/api/editarticles")
+    public ResponseEntity editArticle(@RequestBody ArticleForm articleForm){
+        Article article = articleService.editArticle(articleForm);
+        return ResponseEntity.status(HttpStatus.OK).body(article);
+    }
+
+    @PostMapping("/api/deletearticles")
+    public ResponseEntity deleteArticle(@RequestBody ArticleForm articleForm){
+        articleService.deleteArticle(articleForm);
+        return null;
     }
 
 }

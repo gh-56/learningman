@@ -18,15 +18,18 @@ public class Article {
     private String title;
     @Column
     private String content;
+    @ManyToOne
+    Member member;
 
 //    public Article toEntity(ArticleForm dto) {
 //        this.title = dto.getTitle();
 //    }
 
-    public static Article createArticle(ArticleForm dto){
+    public static Article createArticle(ArticleForm dto, Member member){
         Article article = new Article();
         article.setTitle(dto.getTitle());
         article.setContent(dto.getContent());
+        article.setMember(member);
         return article;
     }
 
