@@ -1,6 +1,5 @@
 package com.quiz.learningman.dto;
 
-import com.quiz.learningman.entity.Word;
 import lombok.*;
 
 @AllArgsConstructor
