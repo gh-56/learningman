@@ -1,23 +1,27 @@
 package com.quiz.learningman.service;
 
 import com.quiz.learningman.dto.SentenceDto;
+import com.quiz.learningman.entity.Member;
 import com.quiz.learningman.entity.Sentence;
 import com.quiz.learningman.entity.Word;
+import com.quiz.learningman.repository.MemberRepository;
 import com.quiz.learningman.repository.SentenceRepository;
 import com.quiz.learningman.repository.WordRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class SentenceService {
-    @Autowired
-    private SentenceRepository sentenceRepository;
-    @Autowired
-    private WordRepository wordRepository;
+    private final SentenceRepository sentenceRepository;
+    private final WordRepository wordRepository;
+    private final MemberRepository memberRepository;
 
     public List<SentenceDto> sentenceList(Long wordId) {
         return sentenceRepository.findByWordId(wordId)
@@ -27,13 +31,14 @@ public class SentenceService {
     }
 
     @Transactional
-    public SentenceDto create(Long wordId, SentenceDto dto) {
+    public SentenceDto create(Long wordId, SentenceDto dto, Member member) {
         // 1. 게시글 조회 및 예외 발생
         Word word = wordRepository.findById(wordId)
                 .orElseThrow(()->new IllegalArgumentException("댓글 생성 실패! " +
                         "대상 게시글이 없습니다."));
+
         // 2. 댓글 엔티티 생성
-        Sentence sentence = Sentence.createSentence(dto, word);
+        Sentence sentence = Sentence.createSentence(dto, word, member);
         // 3. 댓글 엔티티를 DB에 저장
         Sentence created = sentenceRepository.save(sentence);
         // 4. DTO로 변환해 반환
