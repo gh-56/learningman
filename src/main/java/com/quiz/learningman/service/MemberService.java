@@ -1,7 +1,6 @@
 package com.quiz.learningman.service;
 
 import com.quiz.learningman.dto.MemberDto;
-import com.quiz.learningman.dto.MemberProfileImgDto;
 import com.quiz.learningman.entity.Member;
 import com.quiz.learningman.entity.MemberProfileImg;
 import com.quiz.learningman.repository.MemberImgRepository;
@@ -14,7 +13,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -42,12 +42,16 @@ public class MemberService implements UserDetailsService {
 
     public Member updateMemberInfo(MemberDto memberDto,
                                    PasswordEncoder passwordEncoder, Member updateMember) {
-        updateMember.setMemberEmail(null);
-        memberRepository.save(updateMember);
-        updateMember.setMemberName(memberDto.getMemberName());
-        String encodedPassword = passwordEncoder.encode(memberDto.getMemberPassword());
-        updateMember.setMemberPassword(encodedPassword);
-        updateMember.setMemberEmail(memberDto.getMemberEmail());
+        if(memberDto.getMemberName() != null){
+            updateMember.setMemberName(memberDto.getMemberName());
+        } else if(memberDto.getMemberEmail() != null){
+            updateMember.setMemberEmail(null);
+            memberRepository.save(updateMember);
+            updateMember.setMemberEmail(memberDto.getMemberEmail());
+        } else {
+            String encodedPassword = passwordEncoder.encode(memberDto.getMemberPassword());
+            updateMember.setMemberPassword(encodedPassword);
+        }
         return memberRepository.save(updateMember);
     }
 
@@ -64,10 +68,11 @@ public class MemberService implements UserDetailsService {
         return member;
     }
 
-    public void updateQuizScore(String email, String score){
+    public void updateQuizScore(String email, String score, List<String> wrongIndexList){
         Member byMemberEmail = memberRepository.findByMemberEmail(email);
         byMemberEmail.setQuizScore(score);
         byMemberEmail.setDone(true);
+        byMemberEmail.setWrongIndexList(wrongIndexList);
         memberRepository.save(byMemberEmail);
     }
 

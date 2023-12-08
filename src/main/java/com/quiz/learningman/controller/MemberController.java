@@ -61,13 +61,7 @@ public class MemberController {
 
     @PostMapping("/members/update")
     public ResponseEntity memberUpdate(@Valid @RequestBody MemberDto memberDto,
-                                     BindingResult bindingResult,
                                        Principal principal) {
-        // 회원가입시 형식에 맞지 않는 데이터가 들어왔을 때
-        if (bindingResult.hasErrors()) {
-            String errorMessage = "잘못된 접근입니다";
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
-        }
         String email = principal.getName();
         Member updateMember = memberRepository.findByMemberEmail(email);
         try {
