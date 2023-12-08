@@ -42,12 +42,16 @@ public class MemberService implements UserDetailsService {
 
     public Member updateMemberInfo(MemberDto memberDto,
                                    PasswordEncoder passwordEncoder, Member updateMember) {
-        updateMember.setMemberEmail(null);
-        memberRepository.save(updateMember);
-        updateMember.setMemberName(memberDto.getMemberName());
-        String encodedPassword = passwordEncoder.encode(memberDto.getMemberPassword());
-        updateMember.setMemberPassword(encodedPassword);
-        updateMember.setMemberEmail(memberDto.getMemberEmail());
+        if(memberDto.getMemberName() != null){
+            updateMember.setMemberName(memberDto.getMemberName());
+        } else if(memberDto.getMemberEmail() != null){
+            updateMember.setMemberEmail(null);
+            memberRepository.save(updateMember);
+            updateMember.setMemberEmail(memberDto.getMemberEmail());
+        } else {
+            String encodedPassword = passwordEncoder.encode(memberDto.getMemberPassword());
+            updateMember.setMemberPassword(encodedPassword);
+        }
         return memberRepository.save(updateMember);
     }
 

@@ -13,14 +13,10 @@ import lombok.*;
 public class MemberDto {
     Long id;
 
-    @NotBlank(message = "필수 입력값입니다")
     String memberName;
 
-    @Email(message = "이메일 형식으로 입력해주세요")
-    @NotBlank (message = "필수 입력값입니다")
     String memberEmail;
 
-    @NotBlank(message = "필수 입력값입니다")
     String memberPassword;
 
     String role;
