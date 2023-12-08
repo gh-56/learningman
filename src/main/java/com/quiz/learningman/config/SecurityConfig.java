@@ -53,6 +53,7 @@ public class SecurityConfig {
                                 .requestMatchers(antMatcher("/articles/**")).permitAll()
                                 .requestMatchers(antMatcher("/book/**")).permitAll()
                                 .requestMatchers(antMatcher("/quizselect")).permitAll()
+                                .requestMatchers(antMatcher("/words/**")).permitAll()
                                 .anyRequest().authenticated()
                 );
         return http.build();

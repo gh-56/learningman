@@ -32,9 +32,9 @@ public class WordController {
     // POST
     @PostMapping("/api/words")
     public ResponseEntity<Word> create(@RequestBody WordForm dto){
-        Word creaed = wordService.create(dto);
-        return (creaed != null) ?
-                ResponseEntity.status(HttpStatus.OK).body(creaed) :
+        Word created = wordService.create(dto);
+        return (created != null) ?
+                ResponseEntity.status(HttpStatus.OK).body(created) :
                 ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 

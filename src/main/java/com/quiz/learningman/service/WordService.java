@@ -24,7 +24,7 @@ public class WordService {
     }
 
     public Word create(WordForm dto) {
-        Word word = dto.toEntity();
+        Word word = Word.createWord(dto);
         if(word.getId() != null){
             return null;
         }
@@ -33,7 +33,7 @@ public class WordService {
 
     public Word update(Long id, WordForm dto) {
         // 1. DTO -> 엔티니 변환하기
-        Word word = dto.toEntity();
+        Word word = Word.createWord(dto);
         log.info("id: {}, word: {}", id, word.toString());
         // 2. 타깃 조회하기
         Word target = wordRepository.findById(id).orElse(null);

@@ -1,16 +1,16 @@
 package com.quiz.learningman.entity;
 
+import com.quiz.learningman.dto.ArticleForm;
+import com.quiz.learningman.dto.WordForm;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
 @Getter
+@Setter
 public class Word {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,6 +19,13 @@ public class Word {
     private String kWord;
     @Column
     private String eWord;
+
+    public static Word createWord(WordForm dto){
+        Word word = new Word();
+        word.setKWord(dto.getKWord());
+        word.setEWord(dto.getEWord());
+        return word;
+    }
 
     public void patch(Word word) {
         if(word.kWord != null)
