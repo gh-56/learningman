@@ -41,4 +41,16 @@ public class CommentService {
                 .map(CommentDto::createCommentDto)
                 .collect(Collectors.toList());
     }
+
+    public void delete(Long id) {
+        Comment comment = commentRepository.findByCommentId(id);
+        commentRepository.delete(comment);
+    }
+
+    public Comment edit(CommentDto commentDto) {
+        Comment comment = commentRepository.findByCommentId(commentDto.getId());
+        comment.setBody(commentDto.getBody());
+        commentRepository.save(comment);
+        return comment;
+    }
 }

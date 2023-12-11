@@ -1,6 +1,7 @@
 package com.quiz.learningman.controller;
 
 import com.quiz.learningman.dto.CommentDto;
+import com.quiz.learningman.entity.Comment;
 import com.quiz.learningman.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -42,5 +43,17 @@ public class CommentController {
         }
         // 결과 응답
         return ResponseEntity.status(HttpStatus.OK).body(dtos);
+    }
+
+    @PostMapping("/api/editcomment")
+    public ResponseEntity editComments(@RequestBody CommentDto commentDto){
+        Comment edit = commentService.edit(commentDto);
+        return ResponseEntity.status(HttpStatus.OK).body(edit);
+    }
+
+    @PostMapping("/api/deletecomment")
+    public void deleteComment(@RequestBody CommentDto commentDto){
+        Long id = commentDto.getId();
+        commentService.delete(id);
     }
 }
