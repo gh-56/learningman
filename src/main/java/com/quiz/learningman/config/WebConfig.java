@@ -17,7 +17,7 @@ public class WebConfig {
                 registry
                         .addMapping("/**")   // 모든 경로
                         .allowedMethods("*")           // 모든 method
-                        .allowedOrigins("http://13.124.204.80:3000");  // 접근 가능 출처(리액트)
+                        .allowedOrigins("http://ec2-43-200-163-249.ap-northeast-2.compute.amazonaws.com:3000");  // 접근 가능 출처(리액트)
             }
         };
     }
