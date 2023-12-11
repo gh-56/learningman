@@ -2,13 +2,11 @@ package com.quiz.learningman.entity;
 
 import com.quiz.learningman.dto.CommentDto;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @Entity
 @Getter
+@Setter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
