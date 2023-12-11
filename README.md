@@ -55,6 +55,14 @@
 
 <img src="./readmeIMG/wrongWord.gif" alt="틀린 단어 flip효과 이미지" />
 
+## :star: 부가 기능
+
+1. 게시판 + 댓글
+2. 예문 만들기 + 단어 추가
+3. 회원정보 수정
+4. 로그인/ 로그아웃
+5. 반응형 웹사이트
+
 # :pencil2: 기획
 
 ## :page_facing_up: ERD
@@ -76,5 +84,3 @@
 - react-cookie
 - react-modal
 - react-fontawesome
-
-## 스프링 라이브러리
