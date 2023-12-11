@@ -2,7 +2,9 @@
 
 ## :pushpin: 프로젝트 소개
 
-**`학습도우미`** 는 영어 학습 성과를 확인 하고 싶은 **`선생님`** 과 **`학생`** 을 위한 **`학습 도움 웹사이트`** 입니다. 학습도우미를 통해 **학생의 과제 수행여부를 쉽게 확인** 할 수 있습니다.
+**`학습도우미`** 는 영어 학습 성과를 확인 하고 싶은 **`선생님`** 과 **`학생`** 을 위한 **`학습 도움 웹사이트`** 입니다. <br />
+
+학습도우미를 통해 **학생의 과제 수행 여부를 쉽게 확인** 할 수 있습니다.
 
 ## :busts_in_silhouette: 팀 소개
 
@@ -31,18 +33,67 @@
 2023.11.07 ~ 2023.12.12 (약 21일)
 ```
 
-## :sparkles: 핵심 기능
+# :sparkles: 핵심 기능
 
-선생님이 학생 과제 수행 여부 파악하는 것
+:one: **`선생님`** 이 학생들에게 **과제를 내주는** 기능
+
+<img src="./readmeIMG/homeworkTeacher.png" alt="과제 설정하기 이미지" />
+
+:two: **`선생님`** 이 학생 **과제 수행 여부 파악**하는 기능
 
 <img src="./readmeIMG/sam.gif" alt="선생님 메인페이지 이미지" />
 
-틀린 단어 보여지는 것
+- 학생이 과제를 수행했다면 **`초록색`**, 수행하지 않았다면 **`빨간색`** 으로 표현됩니다.
+- 수행한 학생의 **`점수`** 를 확인할 수 있습니다.
+- 모달(modal)을 이용해 학생의 **`틀린 문제`** 가 무엇인지 볼 수 있습니다.
 
-<img src="./readmeIMG/wrongWord.gif" alt="틀린 단어 flip효과 이미지" />
-
-과제 수행 하는 것
+:three: **`학생`** 이 **과제 수행** 하는 기능
 
 <img src="./readmeIMG/homeworkStudent.gif" alt="과제 수행하기 이미지" />
 
-과제 내주는 것
+:four: **틀린 단어 목록 보기** 기능
+
+<img src="./readmeIMG/wrongWord.gif" alt="틀린 단어 flip효과 이미지" />
+
+# :pencil2: 기획
+
+## :page_facing_up: ERD
+
+<img src="./readmeIMG/mysqlERD.png" alt="erd 이미지" />
+
+## :sparkler: Oven
+
+<img src="./readmeIMG/oven.png" alt="erd 이미지" />
+
+## 🔧 기술 스택 & 개발 환경
+
+<img src="https://img.shields.io/badge/JAVA-007396?style=for-the-badge&logo=java&logoColor=white"> 
+<img src="https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=Spring&logoColor=white"> 
+<img src="https://img.shields.io/badge/Springboot-6DB33F?style=for-the-badge&logo=Springboot&logoColor=white">
+<img src="https://img.shields.io/badge/springsecurity-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white">
+<img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=white">
+<img src="https://img.shields.io/badge/html-E34F26?style=for-the-badge&logo=html5&logoColor=white"> 
+<img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> 
+<img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> 
+<img src="https://img.shields.io/badge/linux-FCC624?style=for-the-badge&logo=linux&logoColor=black">
+<img src="https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=JSON%20web%20tokens&logoColor=white">
+<img src="https://img.shields.io/badge/NGINX-009639?style=for-the-badge&logo=NGINX&logoColor=white">
+<img src="https://img.shields.io/badge/postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white">
+<img src="https://img.shields.io/badge/aws-232F3E?style=for-the-badge&logo=AmazonAWS&logoColor=white"> 
+<img src="https://img.shields.io/badge/intellijidea-000000?style=for-the-badge&logo=intellijidea IDE&logoColor=white"> 
+<img src="https://img.shields.io/badge/Visual Studio Code-007ACC?style=for-the-badge&logo=Visual Studio Code&logoColor=white"> 
+<img src="https://img.shields.io/badge/apache tomcat-F8DC75?style=for-the-badge&logo=apachetomcat&logoColor=white"> 
+<img src="https://img.shields.io/badge/gradle-02303A?style=for-the-badge&logo=gradle&logoColor=white"> 
+<img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white"> 
+<img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
+<img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
+
+## 리액트 라이브러리
+
+- axios
+- react-router-dom
+- react-cookie
+- react-modal
+- react-fontawesome
+
+## 스프링 라이브러리
